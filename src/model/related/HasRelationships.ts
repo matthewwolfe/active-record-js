@@ -6,21 +6,21 @@ export default class HasRelationships
 {
     public belongsTo(related: string, foreignKey: string, localKey: string): Builder
     {
-        return new BelongsTo(related, foreignKey, localKey).buildQuery();
+        return new BelongsTo(this, related, foreignKey, localKey).buildQuery();
     }
 
     public belongsToMany(related: string, pivot: string, foreignPivotKey: string, localPivotKey: string): Builder
     {
-        return new BelongsToMany(related, pivot, foreignPivotKey, localPivotKey).buildQuery();
+        return new BelongsToMany(this, related, pivot, foreignPivotKey, localPivotKey).buildQuery();
     }
 
     public hasMany(related: string, foreignKey: string, localKey: string = ''): Builder
     {
-        return new HasMany(related, foreignKey, localKey).buildQuery();
+        return new HasMany(this, related, foreignKey, localKey).buildQuery();
     }
 
-    public hasOne(related: string, foreignKey: string, localKey: string = ''): Builder
+    public hasOne(related: string, foreignKey: string, localKey: string): Builder
     {
-        return new HasOne(related, foreignKey, localKey).buildQuery();
+        return new HasOne(this, related, foreignKey, localKey).buildQuery();
     }
 }

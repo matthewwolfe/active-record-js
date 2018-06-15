@@ -13,9 +13,28 @@ export default class HasAttributes
         }
     }
 
-    public getAttribute(key: string): any
+    public getAccessorProperty(key: number|string): any
     {
+        return this[`${key}Attribute`](this.attributes);
+    }
+
+    public getAttribute(key: number|string): any
+    {
+        if (this.isAccessorProperty(key)) {
+            return this.getAccessorProperty(key);
+        }
+
         return this.attributes[key];
+    }
+
+    public isAccessorProperty(key: number|string): boolean
+    {
+        return typeof this[`${key}Attribute`] !== 'undefined';
+    }
+
+    public isAttribute(key: number|string): boolean
+    {
+        return this.attributes.hasOwnProperty(key) || this.isAccessorProperty(key);
     }
 
     public isDirty(): boolean

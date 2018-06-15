@@ -64,7 +64,7 @@ describe('Model decorators', () =>
             }
         }
 
-        const user = new User();
+        const user = new User({id: 1});
 
         expect(user.setting().constructor.name).to.equal('Builder');
         expect(relations.isRelation('User', 'setting')).to.equal(true);
@@ -78,4 +78,4 @@ describe('Model decorators', () =>
         expect(user.roles().constructor.name).to.equal('Builder');
         expect(relations.isRelation('User', 'roles')).to.equal(true);
     });
-})
+});

@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+import { ModelEvent } from 'model/constants';
 import { HasAttributes, HasEvents, HasRelationships, HasTimestamps, HidesAttributes } from 'model/related';
 import relations from 'model/stores/relations';
 import { Builder } from 'query';
@@ -22,16 +24,21 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     appends: Array<string> = [];
     casts: object = {};
     changedAttributes: Array<string> = [];
+    emitter: EventEmitter;
     hidden: Array<string> = [];
     timestamps: boolean = true;
 
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
     belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
+    fireEvent: (event: ModelEvent) => void;
     fillAttributes: (attributes: object) => void;
-    getAttribute: (key: string|number|symbol) => any;
+    getAccessorProperty: (key: string|number) => any;
+    getAttribute: (key: string|number) => any;
     getHidden: () => Array<string>;
     hasMany: (related: string, foreignKey: string, localKey?: string) => any;
     hasOne: (related: string, foreignKey: string, localKey?: string) => any;
+    isAccessorProperty: (key: number|string) => boolean;
+    isAttribute: (key: number|string) => boolean;
     isDirty: () => boolean;
     setAttribute: (key: string, value: any) => void;
     setCreatedAt: (timestamp: string) => any;
@@ -50,6 +57,20 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     {
         this.fillAttributes(attributes);
         this.applyRelations();
+
+        return new Proxy(this, {
+            get: (object, property: number|string) => {
+                if (object.isAttribute(property)) {
+                    return object.getAttribute(property);
+                }
+
+                return object[property];
+            },
+            set: (object, property: string, value) => {
+                object.setAttribute(property, value);
+                return true;
+            }
+        });
     }
 
     public applyRelations()
@@ -61,9 +82,39 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         );
     }
 
+    private static newModelQuery(): Builder
+    {
+        return new Builder(this.table);
+    }
+
+    private performInsert(query: Builder): boolean
+    {
+        return true;
+    }
+
+    private performUpdate(query: Builder): boolean
+    {
+        return true;
+    }
+
+    public save(): boolean
+    {
+        const query = this.newModelQuery();
+
+        if (this.exists && this.isDirty())
+        {
+            return this.performUpdate(query);
+        }
+        else if (this.isDirty()) {
+            return this.performInsert(query);
+        }
+
+        return true;
+    }
+
     public static select(select: Array<string>): Builder
     {
-        return new Builder(this.table).select(select);
+        return this.newModelQuery().select(select);
     }
 }
 

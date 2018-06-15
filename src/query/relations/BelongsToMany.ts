@@ -7,10 +7,10 @@ export default class BelongsToMany extends Relation
     protected foreignPivotKey: string;
     protected localPivotKey: string;
 
-    constructor(related: string, pivot: string, foreignPivotKey: string, localPivotKey: string)
+    constructor(model: object, related: string, pivot: string, foreignPivotKey: string, localPivotKey: string)
     {
-        super(related);
-        
+        super(model, related);
+
         this.pivot = pivot;
         this.foreignPivotKey = foreignPivotKey;
         this.localPivotKey = localPivotKey;
