@@ -65,7 +65,7 @@ const success = await user.save();
 ```js
 const user = User.findById(1);
 
-user.age = user.page + 1;
+user.age = user.age + 1;
 const success = await user.save();
 ```
 
