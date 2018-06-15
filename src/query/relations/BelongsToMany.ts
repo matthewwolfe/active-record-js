@@ -1,4 +1,7 @@
-export default class BelongsToMany
+import Relation from './Relation';
+
+
+export default class BelongsToMany extends Relation
 {
-    
+
 }

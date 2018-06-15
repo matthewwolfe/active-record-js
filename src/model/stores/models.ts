@@ -1,4 +1,4 @@
-class Store
+class Models
 {
     private models: object = {};
 
@@ -13,4 +13,4 @@ class Store
     }
 }
 
-export default new Store();
+export default new Models();

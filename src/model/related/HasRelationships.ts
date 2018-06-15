@@ -1,7 +1,8 @@
+import { BelongsTo, BelongsToMany, HasMany, HasOne } from 'query/relations';
+
+
 export default class HasRelationships
 {
-    public relations: object = {};
-
     public belongsTo()
     {
 
@@ -12,13 +13,13 @@ export default class HasRelationships
 
     }
 
-    public hasMany(related: string, foreignKey: string, localKey: string)
+    public hasMany(related: string, foreignKey: string, localKey: string = '')
     {
-
+        return new HasMany(related, foreignKey, localKey);
     }
 
-    public hasOne(related: string, foreignKey: string, localKey: string)
+    public hasOne(related: string, foreignKey: string, localKey: string = '')
     {
-
+        return new HasOne(related, foreignKey, localKey);
     }
 }

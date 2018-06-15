@@ -7,7 +7,7 @@ export default class Order
     column: string;
     direction: string = 'asc';
 
-    constructor(column: string, direction?: string)
+    constructor(column: string, direction: string = 'asc')
     {
         if (SORT_DIRECTIONS.indexOf(direction) === -1) {
             throw `Order direction is not valid: ${direction}`;

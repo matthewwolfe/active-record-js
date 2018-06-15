@@ -6,7 +6,7 @@
 import { Model, model } from 'active-record';
 ```
 
-## Definition
+## Descriptions
 
 #### Model
 

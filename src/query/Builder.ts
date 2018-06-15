@@ -1,5 +1,6 @@
-
-import { Order, Where } from 'query/expressions';
+import { JoinType } from 'query/constants';
+import { Join, Order, Where } from 'query/expressions';
+import Compiler from './Compiler';
 
 
 export default class Builder
@@ -15,10 +16,14 @@ export default class Builder
     public orders: Array<Order> = [];
     public wheres: Array<Where> = [];
 
+    private compiler: Compiler;
+
     constructor(from: string)
     {
         this.from = from;
         this.selects = [`${this.from}.*`];
+
+        this.compiler = new Compiler();
     }
 
     public distinct()
@@ -27,19 +32,46 @@ export default class Builder
         return this;
     }
 
+    public get()
+    {
+        const sql = this.compiler.compileSelect(this);
+    }
+
+    public groupBy(groups: Array<string>)
+    {
+        this.groups = groups;
+    }
+
+    public join(table: string, localKey: string, operator: string, foreignKey: string)
+    {
+        this.joins.push(new Join(table, localKey, operator, foreignKey, JoinType.Inner));
+        return this;
+    }
+
     public limit(limit: number)
     {
+        if (!Number.isInteger(limit)) {
+            throw `Limit must be an integer: ${limit}`;
+        }
+
         this.limits = limit;
+        return this;
     }
 
     public offset(offset: number)
     {
+        if (!Number.isInteger(offset)) {
+            throw `Offset must be an integer: ${offset}`;
+        }
+
         this.offsets = offset;
+        return this;
     }
 
     public orderBy(column: string, direction?: string)
     {
         this.orders.push(new Order(column, direction));
+        return this;
     }
 
     public select(selects: Array<string>)
@@ -54,9 +86,9 @@ export default class Builder
         return this;
     }
 
-    public whereIn(column: string, operator: string, value: Array<number|string>)
+    public whereIn(column: string, value: Array<number|string>)
     {
-        this.wheres.push(new Where(column, operator, value));
+        this.wheres.push(new Where(column, 'in', value));
         return this;
     }
 }
