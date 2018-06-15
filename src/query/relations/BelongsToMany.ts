@@ -3,16 +3,14 @@ import Relation from './Relation';
 
 export default class BelongsToMany extends Relation
 {
-    private related: string;
-    private pivot: string;
-    private foreignPivotKey: string;
-    private localPivotKey: string;
+    protected pivot: string;
+    protected foreignPivotKey: string;
+    protected localPivotKey: string;
 
     constructor(related: string, pivot: string, foreignPivotKey: string, localPivotKey: string)
     {
-        super();
-
-        this.related = related;
+        super(related);
+        
         this.pivot = pivot;
         this.foreignPivotKey = foreignPivotKey;
         this.localPivotKey = localPivotKey;

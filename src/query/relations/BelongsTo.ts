@@ -3,13 +3,9 @@ import Relation from './Relation';
 
 export default class BelongsTo extends Relation
 {
-    private related: string;
-    private foreignKey: string;
-    private localKey: string;
-
     constructor(related: string, foreignKey: string, localKey: string)
     {
-        super();
+        super(related);
 
         this.related = related;
         this.foreignKey = foreignKey;
