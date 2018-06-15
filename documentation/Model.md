@@ -63,7 +63,7 @@ const success = await user.save();
 #### Update existing
 
 ```js
-const user = User.findById(1);
+const user = await User.findById(1);
 
 user.age = user.age + 1;
 const success = await user.save();
@@ -82,7 +82,7 @@ const success = await User
 #### Deletion
 
 ```js
-const user = User.findById(1);
+const user = await User.findById(1);
 const success = await user.delete();
 ```
 
