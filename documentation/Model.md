@@ -31,13 +31,67 @@ class User extends Model
 export default User;
 ```
 
-## Usage
-
 ```js
 // Retrieve a user by id
 const user = await User.findById(1);
 const users = await User.where('age', '>', 18).get();
 ```
+
+## Instances
+
+
+#### Define a model
+
+```js
+@model
+class User extends Model
+{
+    public static table = 'users';
+}
+```
+
+#### Create a new instance
+
+```js
+const user = new User();
+
+user.firstName = 'test';
+user.lastName = 'user';
+const success = await user.save();
+```
+
+#### Update existing
+
+```js
+const user = User.findById(1);
+
+user.age = user.page + 1;
+const success = await user.save();
+```
+
+#### Mass Updates
+
+```js
+const success = await User
+    .where('flagged', '=', true)
+    .update({
+        banned: true
+    });
+```
+
+#### Deletion
+
+```js
+const user = User.findById(1);
+const success = await user.delete();
+```
+
+#### Mass Deletion
+
+```js
+const success = await User.where('flagged', '=', true).delete();
+```
+
 
 ## Accessors
 
