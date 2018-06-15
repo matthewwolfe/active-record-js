@@ -1,3 +1,4 @@
+import Database from 'connection/Database';
 import { JoinType } from 'query/constants';
 import { Join, Order, Where } from 'query/expressions';
 import Compiler from './Compiler';
@@ -45,6 +46,11 @@ export default class Builder
     public groupBy(groups: Array<string>)
     {
         this.groups = groups;
+    }
+
+    public async insert(attributes: object): Promise<boolean>
+    {
+        const sql = this.compiler.compileInsert(this, attributes);
     }
 
     public join(table: string, localKey: string, operator: string, foreignKey: string)

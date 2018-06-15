@@ -9,7 +9,7 @@ export default class HasAttributes
     public fillAttributes(attributes: object)
     {
         for (const key in attributes) {
-            this.attributes[key] = attributes[key];
+            this.setAttribute(key, attributes[key]);
         }
     }
 
@@ -39,7 +39,7 @@ export default class HasAttributes
 
     public isDirty(): boolean
     {
-        return this.changedAttributes.length > 1;
+        return this.changedAttributes.length > 0;
     }
 
     public setAttribute(key: string, value: any)

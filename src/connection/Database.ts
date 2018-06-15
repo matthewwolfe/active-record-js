@@ -14,7 +14,7 @@ export default class Database
         });
     }
 
-    public run(query: string) {
+    public async run(query: string) {
         return new Promise((resolve) => {
             this.pool.getConnection((error, connection) => {
                 if (error) {

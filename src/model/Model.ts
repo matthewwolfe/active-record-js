@@ -82,14 +82,14 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         );
     }
 
-    private static newModelQuery(): Builder
+    private newModelQuery(): Builder
     {
-        return new Builder(this.table);
+        return new Builder(this.constructor['table']);
     }
 
-    private performInsert(query: Builder): boolean
+    private performInsert(query: Builder): Promise<boolean>
     {
-        return true;
+        return query.insert(this.attributes);
     }
 
     private performUpdate(query: Builder): boolean
@@ -97,7 +97,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         return true;
     }
 
-    public save(): boolean
+    public async save(): Promise<boolean>
     {
         const query = this.newModelQuery();
 
@@ -114,7 +114,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
 
     public static select(select: Array<string>): Builder
     {
-        return this.newModelQuery().select(select);
+        return new this().newModelQuery().select(select);
     }
 }
 

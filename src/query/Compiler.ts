@@ -5,6 +5,28 @@ import * as mysql from 'mysql';
  */
 export default class Compiler
 {
+    public compileInsert(query, attributes)
+    {
+        const expressions = [];
+
+        expressions.push('INSERT INTO');
+        expressions.push(mysql.escapeId(query.from));
+
+        const columns = [];
+        const values = [];
+
+        for (const key in attributes) {
+            columns.push(mysql.escapeId(key));
+            values.push(mysql.escape(attributes[key]));
+        }
+
+        expressions.push('(', columns.join(', '), ')');
+        expressions.push('VALUES');
+        expressions.push('(', values.join(', '), ')');
+
+        return expressions.join(' ').trim();
+    }
+
     public compileSelect(query)
     {
         const expressions = [];
