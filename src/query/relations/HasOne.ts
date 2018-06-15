@@ -11,4 +11,9 @@ export default class HasOne extends Relation
         this.foreignKey = foreignKey;
         this.localKey = localKey;
     }
+
+    public buildQuery()
+    {
+        return super.buildQuery().setIsFirst(true);
+    }
 }

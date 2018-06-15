@@ -20,6 +20,15 @@ export default class Relation
 
     public buildQuery(): Builder
     {
-        return new Builder(models.getModel(this.related).table);
+        const Model = models.getModel(this.related);
+        let table: string = '';
+
+        if (!Model.hasOwnProperty('table')) {
+            table = Model.name.toLowerCase() + 's';
+        } else {
+            table = Model.table;
+        }
+
+        return new Builder(table);
     }
 }

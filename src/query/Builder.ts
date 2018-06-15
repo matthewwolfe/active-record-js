@@ -6,6 +6,7 @@ import Compiler from './Compiler';
 export default class Builder
 {
     public isDistinct: boolean = false;
+    public isFirst: boolean = false;
     public selects: Array<string> = [];
     public from: string = '';
     public groups: Array<any> = [];
@@ -34,7 +35,12 @@ export default class Builder
 
     public get()
     {
+        if (this.isFirst) {
+            this.limit(1);
+        }
+
         const sql = this.compiler.compileSelect(this);
+        console.log(sql);
     }
 
     public groupBy(groups: Array<string>)
@@ -77,6 +83,12 @@ export default class Builder
     public select(selects: Array<string>)
     {
         this.selects = selects.slice();
+        return this;
+    }
+
+    public setIsFirst(isFirst: boolean)
+    {
+        this.isFirst = isFirst;
         return this;
     }
 
