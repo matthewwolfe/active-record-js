@@ -40,7 +40,6 @@ export default class Builder
         }
 
         const sql = this.compiler.compileSelect(this);
-        console.log(sql);
     }
 
     public groupBy(groups: Array<string>)
@@ -90,6 +89,11 @@ export default class Builder
     {
         this.isFirst = isFirst;
         return this;
+    }
+
+    public toSql()
+    {
+        return this.compiler.compileSelect(this);
     }
 
     public where(column: string, operator: string, value: number|string)

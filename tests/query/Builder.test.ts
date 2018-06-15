@@ -7,31 +7,37 @@ describe('Builder', () =>
 {
     it('distinct', () =>
     {
-        const builder = new Builder('users');
-        expect(builder.isDistinct).to.equal(false);
+        const query = new Builder('users');
+        expect(query.isDistinct).to.equal(false);
 
-        builder.distinct();
-        expect(builder.isDistinct).to.equal(true);
+        query.distinct();
+        expect(query.isDistinct).to.equal(true);
     });
 
     it('limit', () =>
     {
-        const builder = new Builder('users');
-        builder.limit(10);
-        expect(builder.limits).to.equal(10);
+        const query = new Builder('users');
+        query.limit(10);
+        expect(query.limits).to.equal(10);
     });
 
     it('offset', () =>
     {
-        const builder = new Builder('users');
-        builder.offset(10);
-        expect(builder.offsets).to.equal(10);
+        const query = new Builder('users');
+        query.offset(10);
+        expect(query.offsets).to.equal(10);
     });
 
     it('select "from".* by default', () =>
     {
-        const builder = new Builder('users');
-        expect(builder.selects.length).to.equal(1);
-        expect(builder.selects[0]).to.equal('users.*');
+        const query = new Builder('users');
+        expect(query.selects.length).to.equal(1);
+        expect(query.selects[0]).to.equal('users.*');
     });
-})
+
+    it('toSql', () =>
+    {
+        const query = new Builder('users');
+        expect(query.toSql()).to.equal("SELECT `users`.`*` FROM `users`");
+    });
+});
