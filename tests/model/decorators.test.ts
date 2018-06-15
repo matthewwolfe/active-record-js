@@ -27,14 +27,42 @@ describe('Model decorators', () =>
             public static table = 'users';
 
             @relation
-            comments() {
+            setting()
+            {
+                return this.hasOne('Setting', 'userId');
+            }
+
+            @relation
+            comments()
+            {
                 return this.hasMany('Comment', 'userId');
+            }
+
+            @relation
+            client()
+            {
+                return this.belongsTo('Client', 'clientId');
+            }
+
+            @relation
+            roles()
+            {
+                return this.belongsToMany('Role', 'userRoles', 'userId', 'roleId');
             }
         }
 
         const user = new User();
 
+        expect(user.setting().constructor.name).to.equal('HasOne');
+        expect(relations.isRelation('User', 'setting')).to.equal(true);
+
         expect(user.comments().constructor.name).to.equal('HasMany');
         expect(relations.isRelation('User', 'comments')).to.equal(true);
+
+        expect(user.client().constructor.name).to.equal('BelongsTo');
+        expect(relations.isRelation('User', 'client')).to.equal(true);
+
+        expect(user.roles().constructor.name).to.equal('BelongsToMany');
+        expect(relations.isRelation('User', 'roles')).to.equal(true);
     });
 })

@@ -24,7 +24,7 @@ class Relations
 
     public setRelation(modelName, methodName)
     {
-        if (!this.relations.hasOwnProperty[modelName]) {
+        if (!this.relations.hasOwnProperty(modelName)) {
             this.relations[modelName] = [];
         }
 

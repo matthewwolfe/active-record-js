@@ -25,8 +25,8 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     hidden: Array<string> = [];
     timestamps: boolean = true;
 
-    belongsTo: () => void;
-    belongsToMany: () => void;
+    belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
+    belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
     fillAttributes: (attributes: object) => void;
     getAttribute: (key: string|number|symbol) => any;
     getHidden: () => Array<string>;
