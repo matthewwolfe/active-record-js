@@ -112,6 +112,11 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         return true;
     }
 
+    public static findById(id: number)
+    {
+
+    }
+
     public static select(select: Array<string>): Builder
     {
         return new this().newModelQuery().select(select);
