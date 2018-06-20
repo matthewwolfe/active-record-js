@@ -5,19 +5,27 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "integration-tests": "NODE_PATH=./src mocha --exit --require ts-node/register 'tests/integration/**/*.ts'",
-    "test": "NODE_PATH=./src mocha --exit --require ts-node/register 'tests/**/*.ts'",
-    "unit-tests": "NODE_PATH=./src mocha --exit --require ts-node/register 'tests/unit/**/*.ts'",
+    "test": "jest",
     "watch": "tsc --watch"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
+},
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/chai": "4.1.3",
-    "@types/mocha": "5.2.2",
-    "chai": "4.1.2",
-    "mocha": "5.2.0",
-    "mock-require": "^3.0.2",
+    "@types/jest": "^23.1.1",
+    "jest": "^23.1.0",
+    "ts-jest": "^22.4.6",
     "ts-node": "6.1.1",
     "typescript": "2.9.1"
   },
