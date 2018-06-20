@@ -1,32 +1,30 @@
-import 'mocha';
-import { expect } from 'chai';
 import Column from 'migrations/columns/Column';
 import { ColumnType } from 'migrations/constants';
 
 
 describe('Column', () =>
 {
-    it('basic', () =>
+    test('basic', () =>
     {
         const column = new Column('id', ColumnType.INTEGER);
-        expect(column.toString()).to.equal("`id` INT NULL");
+        expect(column.toString()).toEqual("`id` INT NULL");
     });
 
-    it('disallow null', () =>
+    test('disallow null', () =>
     {
         const column = new Column('id', ColumnType.INTEGER, {allowNull: false});
-        expect(column.toString()).to.equal("`id` INT NOT NULL");
+        expect(column.toString()).toEqual("`id` INT NOT NULL");
     });
 
-    it('default', () =>
+    test('default', () =>
     {
         const column = new Column('id', ColumnType.INTEGER, {default: 0});
-        expect(column.toString()).to.equal("`id` INT NULL DEFAULT 0");
+        expect(column.toString()).toEqual("`id` INT NULL DEFAULT 0");
     });
 
-    it('length', () =>
+    test('length', () =>
     {
         const column = new Column('id', ColumnType.INTEGER, {default: 0, length: 15});
-        expect(column.toString()).to.equal("`id` INT (15) NULL DEFAULT 0");
+        expect(column.toString()).toEqual("`id` INT (15) NULL DEFAULT 0");
     });
 });

@@ -1,12 +1,10 @@
-import 'mocha';
-import { expect } from 'chai';
 import { model } from 'model/decorators';
 import Model from 'model/Model';
 
 
 describe('Model', () =>
 {
-    it('create a select query', () =>
+    test('create a select query', () =>
     {
         @model
         class User extends Model
@@ -16,12 +14,12 @@ describe('Model', () =>
 
         const query = User.select(['id']);
 
-        expect(query.selects.length).to.equal(1);
-        expect(query.selects[0]).to.equal('id');
-        expect(query.from).to.equal(User.table);
+        expect(query.selects.length).toEqual(1);
+        expect(query.selects[0]).toEqual('id');
+        expect(query.from).toEqual(User.table);
     });
 
-    it('get an attribute', () =>
+    test('get an attribute', () =>
     {
         @model
         class User extends Model
@@ -30,10 +28,10 @@ describe('Model', () =>
         }
 
         const user = new User({id: 1});
-        expect(user.id).to.equal(1);
+        expect(user.id).toEqual(1);
     });
 
-    it('get an accessor', () =>
+    test('get an accessor', () =>
     {
         @model
         class User extends Model
@@ -51,10 +49,10 @@ describe('Model', () =>
             lastName: 'user'
         });
 
-        expect(user.fullName).to.equal(`${user.firstName} ${user.lastName}`);
+        expect(user.fullName).toEqual(`${user.firstName} ${user.lastName}`);
     });
 
-    it('get an attribute with a mutator', () =>
+    test('get an attribute with a mutator', () =>
     {
         @model
         class User extends Model
@@ -72,13 +70,13 @@ describe('Model', () =>
             lastName: 'user'
         });
 
-        expect(user.firstName).to.equal('TEST');
+        expect(user.firstName).toEqual('TEST');
 
         user.firstName = 'new name';
-        expect(user.firstName).to.equal('NEW NAME');
+        expect(user.firstName).toEqual('NEW NAME');
     });
 
-    it('set an attribute', () =>
+    test('set an attribute', () =>
     {
         @model
         class User extends Model
@@ -89,6 +87,6 @@ describe('Model', () =>
         const user = new User();
         user.id = 1;
 
-        expect(user.id).to.equal(1);
+        expect(user.id).toEqual(1);
     });
 });

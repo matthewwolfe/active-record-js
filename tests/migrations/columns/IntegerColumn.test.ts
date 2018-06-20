@@ -1,20 +1,18 @@
-import 'mocha';
-import { expect } from 'chai';
 import IntegerColumn from 'migrations/columns/IntegerColumn';
 import { ColumnType } from 'migrations/constants';
 
 
 describe('IntegerColumn', () =>
 {
-    it('basic', () =>
+    test('basic', () =>
     {
         const column = new IntegerColumn('id', ColumnType.INTEGER);
-        expect(column.toString()).to.equal("`id` INT SIGNED NULL");
+        expect(column.toString()).toEqual("`id` INT SIGNED NULL");
     });
 
-    it('autoIncrement', () =>
+    test('autoIncrement', () =>
     {
         const column = new IntegerColumn('id', ColumnType.INTEGER, {autoIncrement: true, signed: false});
-        expect(column.toString()).to.equal("`id` INT UNSIGNED NULL AUTO_INCREMENT");
+        expect(column.toString()).toEqual("`id` INT UNSIGNED NULL AUTO_INCREMENT");
     })
 })

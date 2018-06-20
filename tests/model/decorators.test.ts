@@ -1,5 +1,3 @@
-import 'mocha';
-import { expect } from 'chai';
 import { model, relation } from 'model/decorators';
 import Model from 'model/Model';
 import models from 'model/stores/models';
@@ -8,7 +6,7 @@ import relations from 'model/stores/relations';
 
 describe('Model decorators', () =>
 {
-    it('register a model to the store', () =>
+    test('register a model to the store', () =>
     {
         @model
         class User extends Model
@@ -16,10 +14,10 @@ describe('Model decorators', () =>
             public static table = 'users';
         }
 
-        expect(models.getModel('User')).to.equal(User);
+        expect(models.getModel('User')).toEqual(User);
     });
 
-    it('register a relation to the store', () =>
+    test('register a relation to the store', () =>
     {
         // Add related models so that the tests work
         @model
@@ -66,16 +64,16 @@ describe('Model decorators', () =>
 
         const user = new User({id: 1});
 
-        expect(user.setting().constructor.name).to.equal('Builder');
-        expect(relations.isRelation('User', 'setting')).to.equal(true);
+        expect(user.setting().constructor.name).toEqual('Builder');
+        expect(relations.isRelation('User', 'setting')).toEqual(true);
 
-        expect(user.comments().constructor.name).to.equal('Builder');
-        expect(relations.isRelation('User', 'comments')).to.equal(true);
+        expect(user.comments().constructor.name).toEqual('Builder');
+        expect(relations.isRelation('User', 'comments')).toEqual(true);
 
-        expect(user.client().constructor.name).to.equal('Builder');
-        expect(relations.isRelation('User', 'client')).to.equal(true);
+        expect(user.client().constructor.name).toEqual('Builder');
+        expect(relations.isRelation('User', 'client')).toEqual(true);
 
-        expect(user.roles().constructor.name).to.equal('Builder');
-        expect(relations.isRelation('User', 'roles')).to.equal(true);
+        expect(user.roles().constructor.name).toEqual('Builder');
+        expect(relations.isRelation('User', 'roles')).toEqual(true);
     });
 });

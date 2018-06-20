@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "NODE_PATH=./src jest",
     "watch": "tsc --watch"
   },
   "jest": {

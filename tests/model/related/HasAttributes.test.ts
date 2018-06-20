@@ -1,11 +1,9 @@
-import 'mocha';
-import { expect } from 'chai';
 import HasAttributes from 'model/related/HasAttributes';
 
 
 describe('HasAttributes', () =>
 {
-    it('fill attributes', () =>
+    test('fill attributes', () =>
     {
         const attributes = {
             id: 1,
@@ -14,25 +12,11 @@ describe('HasAttributes', () =>
         const instance = new HasAttributes();
         instance.fillAttributes(attributes);
 
-        expect(instance.getAttribute('id')).to.equal(attributes.id);
-        expect(instance.getAttribute('name')).to.equal(attributes.name);
+        expect(instance.getAttribute('id')).toEqual(attributes.id);
+        expect(instance.getAttribute('name')).toEqual(attributes.name);
     });
 
-    it('get attribute', () =>
-    {
-        const attributes = {
-            id: 1,
-            name: 'test'
-        };
-
-        const instance = new HasAttributes();
-        instance.fillAttributes(attributes);
-
-        expect(instance.getAttribute('id')).to.equal(1);
-        expect(instance.getAttribute('name')).to.equal('test');
-    });
-
-    it('is attribute', () =>
+    test('get attribute', () =>
     {
         const attributes = {
             id: 1,
@@ -42,16 +26,30 @@ describe('HasAttributes', () =>
         const instance = new HasAttributes();
         instance.fillAttributes(attributes);
 
-        expect(instance.isAttribute('id')).to.equal(true);
-        expect(instance.isAttribute('random-attribute')).to.equal(false);
+        expect(instance.getAttribute('id')).toEqual(1);
+        expect(instance.getAttribute('name')).toEqual('test');
     });
 
-    it('set attribute', () => {
+    test('is attribute', () =>
+    {
+        const attributes = {
+            id: 1,
+            name: 'test'
+        };
+
+        const instance = new HasAttributes();
+        instance.fillAttributes(attributes);
+
+        expect(instance.isAttribute('id')).toEqual(true);
+        expect(instance.isAttribute('random-attribute')).toEqual(false);
+    });
+
+    test('set attribute', () => {
         const id = 1;
 
         const instance = new HasAttributes();
         instance.setAttribute('id', id);
 
-        expect(instance.getAttribute('id')).to.equal(id);
+        expect(instance.getAttribute('id')).toEqual(id);
     });
 });
