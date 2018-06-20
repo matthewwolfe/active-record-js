@@ -7,7 +7,7 @@ describe('Compiler', () =>
     test('compileSelect - default select', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
 
         expect(compiler.compileSelect(query)).toEqual('SELECT `users`.`*` FROM `users`');
     });
@@ -15,7 +15,7 @@ describe('Compiler', () =>
     test('compileSelect - distinct', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
         query.distinct();
 
         expect(compiler.compileSelect(query)).toEqual("SELECT DISTINCT `users`.`*` FROM `users`");
@@ -25,7 +25,7 @@ describe('Compiler', () =>
     {
         const sql = "SELECT `users`.`*` FROM `users` JOIN `comments` ON `users`.`id` = `comments`.`userId`";
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
         query.join('comments', 'users.id', '=', 'comments.userId');
 
         expect(compiler.compileSelect(query)).toEqual(sql);
@@ -34,7 +34,7 @@ describe('Compiler', () =>
     test('compileSelect - limit', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
         query.limit(10);
 
         expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` LIMIT 10");
@@ -43,7 +43,7 @@ describe('Compiler', () =>
     test('compileSelect - limit/offset', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
         query.limit(10).offset(10);
 
         expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` LIMIT 10 OFFSET 10");
@@ -52,7 +52,7 @@ describe('Compiler', () =>
     test('compileSelect - orderBy', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
 
         query.orderBy('id', 'desc');
         expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` ORDER BY `id` `DESC`");
@@ -66,7 +66,7 @@ describe('Compiler', () =>
     test('compileSelect - select', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
         query.select(['id', 'firstName', 'lastName']);
 
 
@@ -77,7 +77,7 @@ describe('Compiler', () =>
     {
         const sql = "SELECT `users`.`*` FROM `users` WHERE `firstName` = 'test' AND `lastName` = 'user'";
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
 
         query.where('firstName', '=', 'test');
         query.where('lastName', '=', 'user');
@@ -88,7 +88,7 @@ describe('Compiler', () =>
     test('compileSelect - whereIn', () =>
     {
         const compiler = new Compiler();
-        const query = new Builder('users');
+        const query = new Builder().from('users');
 
         query.whereIn('id', [1, 2, 3]);
 

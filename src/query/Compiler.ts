@@ -10,7 +10,7 @@ export default class Compiler
         const expressions = [];
 
         expressions.push('INSERT INTO');
-        expressions.push(mysql.escapeId(query.from));
+        expressions.push(mysql.escapeId(query.fromTable));
 
         const columns = [];
         const values = [];
@@ -38,7 +38,7 @@ export default class Compiler
         }
 
         expressions.push(query.selects.map(select => mysql.escapeId(select)).join(', '));
-        expressions.push(`FROM ${mysql.escapeId(query.from)}`);
+        expressions.push(`FROM ${mysql.escapeId(query.fromTable)}`);
 
         if (query.joins.length > 0) {
             expressions.push(query.joins);

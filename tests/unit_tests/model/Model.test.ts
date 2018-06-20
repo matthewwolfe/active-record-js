@@ -16,7 +16,7 @@ describe('Model', () =>
 
         expect(query.selects.length).toEqual(1);
         expect(query.selects[0]).toEqual('id');
-        expect(query.from).toEqual(User.table);
+        expect(query.fromTable).toEqual(User.table);
     });
 
     test('get an attribute', () =>

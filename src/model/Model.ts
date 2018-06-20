@@ -84,7 +84,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
 
     private newModelQuery(): Builder
     {
-        return new Builder(this.constructor['table']);
+        return new Builder().setModel(this);
     }
 
     private async performInsert(query: Builder): Promise<number>
@@ -107,7 +107,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         }
         else if (this.isDirty()) {
             const id = this.performInsert(query);
-            console.log(id);
+
         }
 
         return true;
