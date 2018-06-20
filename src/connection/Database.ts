@@ -37,7 +37,7 @@ export default class Database
         return md5(this.host + this.user + this.password + this.database);
     }
 
-    public async run(query: string)
+    public async run(query: string): Promise<any>
     {
         return new Promise((resolve, reject) => {
             this.pool.getConnection((error, connection) => {
