@@ -34,6 +34,10 @@ export default class HasAttributes
 
     public isAccessorProperty(key: number|string): boolean
     {
+        if (typeof key === 'symbol') {
+            return false;
+        }
+
         return typeof this[`${key}Attribute`] !== 'undefined';
     }
 

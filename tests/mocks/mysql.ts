@@ -1,4 +1,4 @@
-
+import * as Sqlstring from 'sqlstring';
 
 let mockResults = [];
 
@@ -12,6 +12,14 @@ function createPool() {
     };
 }
 
+function escape(string) {
+    return Sqlstring.escape(string);
+}
+
+function escapeId(string) {
+    return Sqlstring.escapeId(string);
+}
+
 function getConnection(fn) {
     fn(undefined, {
         query,
@@ -19,11 +27,13 @@ function getConnection(fn) {
     });
 }
 
-function query(_, callback) {
+function query(query, callback) {
     callback(undefined, mockResults);
 }
 
 export {
     createPool,
+    escape,
+    escapeId,
     setMockResults
 };

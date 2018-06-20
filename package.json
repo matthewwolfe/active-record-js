@@ -19,12 +19,14 @@
       "json",
       "node"
     ]
-},
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "23.1.1",
+    "@types/sqlstring": "2.2.0",
     "jest": "23.1.0",
+    "sqlstring": "2.3.1",
     "ts-jest": "22.4.6",
     "ts-node": "6.1.1",
     "typescript": "2.9.1"

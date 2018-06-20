@@ -1,6 +1,14 @@
+jest.mock('mysql', () => require(`${process.cwd()}/tests/mocks/mysql`));
+
+import DB from 'connection/DB';
 import { model } from 'model/decorators';
 import Model from 'model/Model';
 
+
+beforeEach(() =>
+{
+    DB.create('127.0.0.1', 'user', 'password', 'TEST_DB', 'test-database');
+});
 
 describe('Model', () =>
 {
@@ -17,6 +25,28 @@ describe('Model', () =>
         expect(query.selects.length).toEqual(1);
         expect(query.selects[0]).toEqual('id');
         expect(query.fromTable).toEqual(User.table);
+    });
+
+    test('findById', async () =>
+    {
+        require('mysql').setMockResults([
+            {id: 1, firstName: 'test', lastName: 'user'}
+        ]);
+
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const user = await User.findById(1);
+
+        expect(user instanceof User).toEqual(true);
+        expect(user.id).toEqual(1);
+        expect(user.firstName).toEqual('test');
+        expect(user.lastName).toEqual('user');
+
+        console.log();
     });
 
     test('get an attribute', () =>

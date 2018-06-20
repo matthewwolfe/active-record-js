@@ -85,7 +85,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
 
     private newModelQuery(): Builder
     {
-        return new Builder().setModel(this);
+        return new Builder().setModel(this.constructor.name);
     }
 
     private async performInsert(query: Builder): Promise<boolean>

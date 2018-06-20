@@ -1,4 +1,5 @@
 import { DB } from 'connection';
+import models from 'model/stores/models';
 import { JoinType } from 'query/constants';
 import { Join, Order, Where } from 'query/expressions';
 import Compiler from './Compiler';
@@ -8,7 +9,7 @@ export default class Builder
 {
     // The model class associated with this query. If there is a model class, it will be used to transform
     // returned row(s) into model instances
-    public Model: any;
+    public model: string = '';
 
     // Select distinct
     public isDistinct: boolean = false;
@@ -67,8 +68,7 @@ export default class Builder
         }
 
         const sql = this.compiler.compileSelect(this);
-        let rows = await DB.run(sql);
-        rows = this.transformRows(rows);
+        let rows = this.transformRows(await DB.run(sql));
 
         if (this.isFirst) {
             return rows[0];
@@ -106,10 +106,10 @@ export default class Builder
         return this;
     }
 
-    public setModel(Model: any): Builder
+    public setModel(model: string): Builder
     {
-        this.Model = Model;
-        this.from(Model.constructor.table);
+        this.model = model;
+        this.from(models.getModel(model).table);
 
         return this;
     }
@@ -149,11 +149,13 @@ export default class Builder
 
     private transformRows(rows: Array<any>): Array<any>
     {
-        if (!this.Model) {
+        if (!this.model) {
             return rows;
         }
 
-        return rows.map(row => new this.Model(row));
+        const Model = models.getModel(this.model);
+
+        return rows.map(row => new Model(row));
     }
 
     public where(column: string, operator: string, value: number|string): Builder
