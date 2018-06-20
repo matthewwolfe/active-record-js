@@ -67,7 +67,8 @@ export default class Builder
         }
 
         const sql = this.compiler.compileSelect(this);
-        const rows = await DB.run(sql);
+        let rows = await DB.run(sql);
+        rows = this.transformRows(rows);
 
         if (this.isFirst) {
             return rows[0];
@@ -144,6 +145,15 @@ export default class Builder
     public toSql(): string
     {
         return this.compiler.compileSelect(this);
+    }
+
+    private transformRows(rows: Array<any>): Array<any>
+    {
+        if (!this.Model) {
+            return rows;
+        }
+
+        return rows.map(row => new this.Model(row));
     }
 
     public where(column: string, operator: string, value: number|string): Builder

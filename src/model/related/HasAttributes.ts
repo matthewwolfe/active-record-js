@@ -27,6 +27,11 @@ export default class HasAttributes
         return this.attributes[key];
     }
 
+    public getAttributes()
+    {
+        return this.attributes;
+    }
+
     public isAccessorProperty(key: number|string): boolean
     {
         return typeof this[`${key}Attribute`] !== 'undefined';

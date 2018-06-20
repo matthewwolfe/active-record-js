@@ -34,6 +34,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     fillAttributes: (attributes: object) => void;
     getAccessorProperty: (key: string|number) => any;
     getAttribute: (key: string|number) => any;
+    getAttributes: () => any;
     getHidden: () => Array<string>;
     hasMany: (related: string, foreignKey: string, localKey?: string) => any;
     hasOne: (related: string, foreignKey: string, localKey?: string) => any;
@@ -87,33 +88,36 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         return new Builder().setModel(this);
     }
 
-    private async performInsert(query: Builder): Promise<number>
+    private async performInsert(query: Builder): Promise<boolean>
     {
-        return await query.insert(this.attributes);
+        const id = await query.insert(this.attributes);
+        this.id = id;
+
+        return true;
     }
 
-    private performUpdate(query: Builder): boolean
+    private async performUpdate(query: Builder): Promise<boolean>
     {
         return true;
     }
 
-    public async save(): Promise<any>
+    public async save(): Promise<boolean>
     {
         const query = this.newModelQuery();
 
         if (this.exists && this.isDirty())
         {
-            return this.performUpdate(query);
+            return await this.performUpdate(query);
+
         }
         else if (this.isDirty()) {
-            const id = this.performInsert(query);
-
+            return await this.performInsert(query);
         }
 
         return true;
     }
 
-    public static findById(id: number)
+    public static async findById(id: number): Promise<Model>
     {
         return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
     }
