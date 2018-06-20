@@ -87,9 +87,9 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         return new Builder(this.constructor['table']);
     }
 
-    private performInsert(query: Builder): Promise<boolean>
+    private async performInsert(query: Builder): Promise<number>
     {
-        return query.insert(this.attributes);
+        return await query.insert(this.attributes);
     }
 
     private performUpdate(query: Builder): boolean
@@ -97,7 +97,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
         return true;
     }
 
-    public async save(): Promise<boolean>
+    public async save(): Promise<any>
     {
         const query = this.newModelQuery();
 
@@ -106,7 +106,8 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
             return this.performUpdate(query);
         }
         else if (this.isDirty()) {
-            return this.performInsert(query);
+            const id = this.performInsert(query);
+            console.log(id);
         }
 
         return true;
@@ -114,7 +115,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
 
     public static findById(id: number)
     {
-
+        return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
     }
 
     public static select(select: Array<string>): Builder

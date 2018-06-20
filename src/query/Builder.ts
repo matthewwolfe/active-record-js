@@ -1,4 +1,4 @@
-import Database from 'connection/Database';
+import { DB } from 'connection';
 import { JoinType } from 'query/constants';
 import { Join, Order, Where } from 'query/expressions';
 import Compiler from './Compiler';
@@ -6,6 +6,7 @@ import Compiler from './Compiler';
 
 export default class Builder
 {
+    public Model: any;
     public isDistinct: boolean = false;
     public isFirst: boolean = false;
     public selects: Array<string> = [];
@@ -20,9 +21,11 @@ export default class Builder
 
     private compiler: Compiler;
 
-    constructor(from: string)
+    constructor(from: string, Model: any = undefined)
     {
         this.from = from;
+        this.Model = Model;
+
         this.selects = [`${this.from}.*`];
 
         this.compiler = new Compiler();
@@ -34,13 +37,26 @@ export default class Builder
         return this;
     }
 
-    public get()
+    public first()
+    {
+        this.setIsFirst(true);
+        return this.get();
+    }
+
+    public async get()
     {
         if (this.isFirst) {
             this.limit(1);
         }
 
         const sql = this.compiler.compileSelect(this);
+        const rows = await DB.run(sql);
+
+        if (this.isFirst) {
+            return rows[0];
+        }
+
+        return rows;
     }
 
     public groupBy(groups: Array<string>)
@@ -48,9 +64,11 @@ export default class Builder
         this.groups = groups;
     }
 
-    public async insert(attributes: object): Promise<boolean>
+    public async insert(attributes: object)
     {
         const sql = this.compiler.compileInsert(this, attributes);
+        const { insertId } = await DB.run(sql);
+        return insertId;
     }
 
     public join(table: string, localKey: string, operator: string, foreignKey: string)

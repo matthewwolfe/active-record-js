@@ -1,10 +1,13 @@
-import { Model, model } from 'model';
-import { ModelEvent } from 'model/constants';
+require('dotenv').config();
+
+import { Schema } from 'migrations';
+import { Model, ModelEvent, model } from 'model';
 import { Builder } from 'query';
 
 export {
     Builder,
     Model,
+    ModelEvent,
     model,
-    ModelEvent
+    Schema
 };

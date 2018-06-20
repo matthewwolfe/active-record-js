@@ -91,21 +91,4 @@ describe('Model', () =>
 
         expect(user.id).to.equal(1);
     });
-
-    it('save', () =>
-    {
-        @model
-        class User extends Model
-        {
-            public static table = 'users';
-        }
-
-        const user = new User({
-            id: 1,
-            firstName: 'test',
-            lastName: 'user'
-        });
-
-        user.save();
-    });
 });
