@@ -12,7 +12,7 @@ from Models, Relations, or using the DB class.
 By default, the query builder will select all columns from the specified ```from``` table. This can be overwritten
 by selecting specific columns.
 
-```js
+```typescript
 // Retrieve the id, firstName, and lastName columns from the users table
 User.select(['id', 'firstName', 'lastName']).get();
 ```
@@ -21,7 +21,7 @@ User.select(['id', 'firstName', 'lastName']).get();
 
 Columns can also be added conditionally.
 
-```js
+```typescript
 const query = User.select(['id']);
 
 if (someCondition) {
@@ -33,7 +33,7 @@ if (someCondition) {
 
 Inserting a raw expression into the select statement of a query is easy using the ```selectRaw``` method.
 
-```js
+```typescript
 Product.selectRaw('price * ? as tax', [0.05]);
 ```
 

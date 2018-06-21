@@ -14,7 +14,7 @@ To add a database, import ```DB``` and use the ```create``` static method. This 
 different databases. The active database can be switched by specifying a database connection name as the 5th
 parameter.
 
-```js
+```typescript
 import { DB } from 'active-record';
 
 DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION NAME');
@@ -23,7 +23,7 @@ DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION
 
 ## Switching databases
 
-```js
+```typescript
 import { DB } from 'active-record';
 
 DB.create('127.0.0.1', 'root', 'password', 'db1', 'db1');

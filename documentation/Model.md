@@ -2,7 +2,7 @@
 
 ## Import
 
-```js
+```typescript
 import { Model, model } from 'active-record';
 ```
 
@@ -20,7 +20,7 @@ having to import them directly, or deal with circular dependencies.
 
 ## Definition
 
-```js
+```typescript
 // Add the model to the model store - required
 @model
 class User extends Model
@@ -31,7 +31,7 @@ class User extends Model
 export default User;
 ```
 
-```js
+```typescript
 // Retrieve a user by id
 const user = await User.findById(1);
 const users = await User.where('age', '>', 18).get();
@@ -42,7 +42,7 @@ const users = await User.where('age', '>', 18).get();
 
 #### Define a model
 
-```js
+```typescript
 @model
 class User extends Model
 {
@@ -52,7 +52,7 @@ class User extends Model
 
 #### Create a new instance
 
-```js
+```typescript
 const user = new User();
 
 user.firstName = 'test';
@@ -62,7 +62,7 @@ const success = await user.save();
 
 #### Update existing
 
-```js
+```typescript
 const user = await User.findById(1);
 
 user.age = user.age + 1;
@@ -71,7 +71,7 @@ const success = await user.save();
 
 #### Mass Updates
 
-```js
+```typescript
 const success = await User
     .where('flagged', '=', true)
     .update({
@@ -81,14 +81,14 @@ const success = await User
 
 #### Deletion
 
-```js
+```typescript
 const user = await User.findById(1);
 const success = await user.delete();
 ```
 
 #### Mass Deletion
 
-```js
+```typescript
 const success = await User.where('flagged', '=', true).delete();
 ```
 
@@ -100,7 +100,7 @@ Accessors can allow specifying additional attributes on a Model. They can be acc
 - Accessors can be called directly as a property of the model instance.
 - Accessors can also be used to mutate an existing property. The property will be overwritten by the result of the function.
 
-```js
+```typescript
 @model
 class User extends Model
 {
