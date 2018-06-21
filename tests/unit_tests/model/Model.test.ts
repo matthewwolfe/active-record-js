@@ -37,6 +37,11 @@ describe('Model', () =>
         class User extends Model
         {
             public static table = 'users';
+
+            public fullNameAttribute(attributes): string
+            {
+                return `${attributes.firstName} ${attributes.lastName}`;
+            }
         }
 
         const user = await User.findById(1);
@@ -45,8 +50,7 @@ describe('Model', () =>
         expect(user.id).toEqual(1);
         expect(user.firstName).toEqual('test');
         expect(user.lastName).toEqual('user');
-
-        console.log();
+        expect(user.fullName).toEqual('test user');
     });
 
     test('get an attribute', () =>
