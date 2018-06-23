@@ -63,10 +63,6 @@ export default class Builder
 
     public async get(): Promise<any>
     {
-        if (this.isFirst) {
-            this.limit(1);
-        }
-
         const sql = this.compiler.compileSelect(this);
         let rows = this.transformRows(await DB.run(sql));
 
@@ -139,6 +135,11 @@ export default class Builder
     public setIsFirst(isFirst: boolean): Builder
     {
         this.isFirst = isFirst;
+
+        if (isFirst) {
+            this.limit(1);
+        }
+
         return this;
     }
 

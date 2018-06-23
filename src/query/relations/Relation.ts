@@ -15,9 +15,14 @@ export default class Relation
         this.related = related;
     }
 
-    public get()
+    public getLocalTableName(): string
     {
+        return models.getModel(this.model.constructor.name).table;
+    }
 
+    public getLocalKeyValue(): any
+    {
+        return this.model.getAttribute(this.localKey);
     }
 
     public getRelatedTableName(): string
@@ -36,6 +41,6 @@ export default class Relation
 
     public buildQuery(): Builder
     {
-        return new Builder(this.getRelatedTableName());
+        return new Builder().setModel(this.related);
     }
 }

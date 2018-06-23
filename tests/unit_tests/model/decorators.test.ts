@@ -1,79 +1,131 @@
+jest.mock('mysql', () => require(`${process.cwd()}/tests/mocks/mysql`));
+
+import DB from 'connection/DB';
 import { model, relation } from 'model/decorators';
 import Model from 'model/Model';
 import models from 'model/stores/models';
 import relations from 'model/stores/relations';
 
 
+beforeEach(() =>
+{
+    DB.create('127.0.0.1', 'user', 'password', 'TEST_DB', 'test-database');
+});
+
 describe('Model decorators', () =>
 {
-    test('register a model to the store', () =>
+    @model
+    class User extends Model
     {
-        @model
-        class User extends Model
+        public static table = 'users';
+
+        @relation
+        setting()
         {
-            public static table = 'users';
+            return this.hasOne('Setting', 'userId');
         }
 
+        @relation
+        comments()
+        {
+            return this.hasMany('Comment', 'userId');
+        }
+
+        @relation
+        client()
+        {
+            return this.belongsTo('Client', 'clientId');
+        }
+
+        @relation
+        roles()
+        {
+            return this.belongsToMany('Role', 'userRoles', 'userId', 'roleId');
+        }
+    }
+
+    // Add related models so that the tests work
+    @model
+    class Setting extends Model
+    {
+        public static table = 'settings';
+    }
+
+    @model
+    class Comment extends Model
+    {
+        public static table = 'comments';
+    }
+
+    @model
+    class Client extends Model
+    {
+        public static table = 'clients';
+    }
+
+    @model
+    class Role extends Model
+    {
+        public static table = 'roles';
+    }
+
+    test('register a model to the store', () =>
+    {
         expect(models.getModel('User')).toEqual(User);
     });
 
-    test('register a relation to the store', () =>
+    test('relation - hasOne', async () =>
     {
-        // Add related models so that the tests work
-        @model
-        class Setting extends Model {}
-
-        @model
-        class Comment extends Model {}
-
-        @model
-        class Client extends Model {}
-
-        @model
-        class Role extends Model {}
-
-        @model
-        class User extends Model
-        {
-            public static table = 'users';
-
-            @relation
-            setting()
-            {
-                return this.hasOne('Setting', 'userId');
-            }
-
-            @relation
-            comments()
-            {
-                return this.hasMany('Comment', 'userId');
-            }
-
-            @relation
-            client()
-            {
-                return this.belongsTo('Client', 'clientId');
-            }
-
-            @relation
-            roles()
-            {
-                return this.belongsToMany('Role', 'userRoles', 'userId', 'roleId');
-            }
-        }
-
         const user = new User({id: 1});
-
         expect(user.setting().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'setting')).toEqual(true);
 
+        require('mysql').setMockResults([
+            {id: 1, userId: 1, type: 'setting-type'},
+        ]);
+
+        const setting = await user.$setting;
+        expect(setting.constructor.name).toEqual('Setting');
+        expect(setting.id).toEqual(1);
+        expect(setting.type).toEqual('setting-type');
+    });
+
+    test('relation - hasMany', async () =>
+    {
+        const user = new User({id: 1});
         expect(user.comments().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'comments')).toEqual(true);
 
+        require('mysql').setMockResults([
+            {id: 1, userId: 1, message: 'comment 1'},
+            {id: 2, userId: 1, message: 'comment 2'},
+            {id: 3, userId: 1, message: 'comment 3'},
+        ]);
+
+        const comments = await user.$comments;
+        expect(comments.length).toEqual(3);
+        expect(comments[0].constructor.name).toEqual('Comment');
+    });
+
+    test('relation - belongsTo', async () =>
+    {
+        const user = new User({id: 1, clientId: 1});
         expect(user.client().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'client')).toEqual(true);
 
+        require('mysql').setMockResults([
+            {id: 1, name: 'Client 1'}
+        ]);
+
+        const client = await user.$client;
+        expect(client.constructor.name).toEqual('Client');
+        expect(client.id).toEqual(1);
+    });
+
+    test('relation - belongsToMany', () =>
+    {
+        const user = new User({id: 1});
         expect(user.roles().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'roles')).toEqual(true);
-    });
+    })
 });

@@ -2,6 +2,11 @@
 
 ## Defining Relationships
 
+#### relation - decorator
+
+The ```relation``` decorator registers the relationship for the model class so that it can be accessible as a getter
+and a method. Relationship getters should be prefixed with a ```$```. See below: Eager Loading
+
 #### One To One
 
 ```typescript
@@ -23,6 +28,7 @@ const account = await user.account().get();
 @model
 class Account extends Model
 {
+    @relation
     public user()
     {
         return this.belongsTo('User', 'userId');
@@ -38,6 +44,7 @@ const user: User = await account.user().get();
 @model
 class User extends Model
 {
+    @relation
     public comments()
     {
         return this.hasMany('Comment', 'userId');
@@ -53,6 +60,7 @@ const comments: Array<User> = await user.comments().get();
 @model
 class Comment extends Model
 {
+    @relation
     public user()
     {
         return this.belongsTo('User', 'userId');
@@ -68,6 +76,7 @@ const user: User = await comment.user().get();
 @model
 class Group extends Model
 {
+    @relation
     public users()
     {
         return this.belongsToMany('User', 'userGroups', 'groupId', 'userId');
@@ -75,4 +84,23 @@ class Group extends Model
 }
 
 const users: Array<User> = await group.users().get();
+```
+
+## Eager Loading
+
+A relationship can be accessed as a property when prefixed with a ```$```. This allows for chaining together many
+relationships.
+
+```typescript
+@model
+class User extends Model
+{
+    @relation
+    public account()
+    {
+        return this.hasOne('Account', 'userId');
+    }
+}
+
+const account = await user.$account;
 ```

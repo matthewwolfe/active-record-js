@@ -28,6 +28,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     hidden: Array<string> = [];
     timestamps: boolean = true;
 
+    addListener: (event: any, fn: any) => void;
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
     belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
     fireEvent: (event: ModelEvent) => void;
@@ -78,7 +79,7 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     {
         relations.getRelations(this.constructor.name).forEach(relation =>
             Object.defineProperty(this, `\$${relation}`, {
-                get: () => this[relation]().get()
+                get: async () => await this[relation]().get()
             })
         );
     }

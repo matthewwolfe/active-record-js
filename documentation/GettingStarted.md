@@ -3,6 +3,7 @@
 
 #### Documentation
 
+- [Migrations](Migrations.md)
 - [Model](Model.md)
 - [Query Builder](QueryBuilder.md)
 - [Relationships](Relationships.md)

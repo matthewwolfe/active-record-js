@@ -14,7 +14,7 @@ export default class HasRelationships
         return new BelongsToMany(this, related, pivot, foreignPivotKey, localPivotKey).buildQuery();
     }
 
-    public hasMany(related: string, foreignKey: string, localKey: string = ''): Builder
+    public hasMany(related: string, foreignKey: string, localKey: string): Builder
     {
         return new HasMany(this, related, foreignKey, localKey).buildQuery();
     }

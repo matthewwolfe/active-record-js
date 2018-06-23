@@ -3,7 +3,7 @@ import Relation from './Relation';
 
 export default class BelongsTo extends Relation
 {
-    constructor(model: object, related: string, foreignKey: string, localKey: string)
+    constructor(model: object, related: string, foreignKey: string, localKey: string = 'id')
     {
         super(model, related);
 
@@ -14,6 +14,8 @@ export default class BelongsTo extends Relation
 
     public buildQuery()
     {
-        return super.buildQuery().setIsFirst(true);
+        return super.buildQuery()
+            .where(`${this.getLocalTableName()}.${this.foreignKey}`, '=', this.getLocalKeyValue())
+            .setIsFirst(true);
     }
 }

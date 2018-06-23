@@ -14,11 +14,8 @@ export default class HasOne extends Relation
 
     public buildQuery()
     {
-        const relatedTable = this.getRelatedTableName();
-        const localKeyValue = this.model.getAttribute(this.localKey);
-
         return super.buildQuery()
-            .where(`${relatedTable}.${this.foreignKey}`, '=', localKeyValue)
+            .where(`${this.getRelatedTableName()}.${this.foreignKey}`, '=', this.getLocalKeyValue())
             .setIsFirst(true);
     }
 }
