@@ -72,13 +72,18 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         });
     }
 
-    public applyRelations()
+    private applyRelations()
     {
         relations.getRelations(this.constructor.name).forEach(relation =>
             Object.defineProperty(this, `\$${relation}`, {
                 get: async () => await this[relation]().get()
             })
         );
+    }
+
+    public static async findById(id: number): Promise<Model>
+    {
+        return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
     }
 
     private newModelQuery(): Builder
@@ -113,11 +118,6 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         }
 
         return true;
-    }
-
-    public static async findById(id: number): Promise<Model>
-    {
-        return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
     }
 
     public static select(select: Array<string>): Builder

@@ -1,8 +1,9 @@
 import Model from './Model';
-import { model } from './decorators';
+import { model, relation } from './decorators';
 
 
 export {
     Model,
-    model
+    model,
+    relation
 };

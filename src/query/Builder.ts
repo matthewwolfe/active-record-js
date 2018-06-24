@@ -52,7 +52,7 @@ export default class Builder
         return this.get();
     }
 
-    public from(table): Builder
+    public from(table: string): Builder
     {
         this.fromTable = table;
 

@@ -2,7 +2,7 @@ require('dotenv').config();
 
 import { Emitter } from 'emitter';
 import { Schema } from 'migrations';
-import { Model, model } from 'model';
+import { Model, model, relation } from 'model';
 import { Builder } from 'query';
 
 export {
@@ -10,5 +10,6 @@ export {
     Emitter,
     Model,
     model,
+    relation,
     Schema
 };
