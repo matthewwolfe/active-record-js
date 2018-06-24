@@ -5,7 +5,7 @@ import * as mysql from 'mysql';
  */
 export default class Compiler
 {
-    public compileInsert(query, attributes)
+    public compileInsert(query, attributes): string
     {
         const expressions = [];
 
@@ -27,7 +27,7 @@ export default class Compiler
         return expressions.join(' ').trim();
     }
 
-    public compileSelect(query)
+    public compileSelect(query): string
     {
         const expressions = [];
 
@@ -62,6 +62,25 @@ export default class Compiler
 
         if (query.offsets) {
             expressions.push('OFFSET', query.offsets);
+        }
+
+        return expressions.join(' ').trim();
+    }
+
+    public compileUpdate(query): string
+    {
+        const expressions = ['UPDATE', mysql.escapeId(query.fromTable), 'SET'];
+
+        if (query.updates) {
+            expressions.push(
+                Object.keys(query.updates).map(column =>
+                    `${mysql.escapeId(column)} = ${mysql.escape(query.updates[column])}`
+                ).join(', ')
+            );
+        }
+
+        if (query.wheres.length > 0) {
+            expressions.push('WHERE', query.wheres.join(' AND '));
         }
 
         return expressions.join(' ').trim();

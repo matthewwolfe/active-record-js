@@ -13,6 +13,7 @@ export default class Builder
 
     // Select distinct
     public isDistinct: boolean = false;
+    public isUpdate: boolean = false;
 
     // Limits the query to 1 and returns the first result if true
     public isFirst: boolean = false;
@@ -28,6 +29,7 @@ export default class Builder
     public limits: number;
     public offsets: number;
     public orders: Array<Order> = [];
+    public updates: object = {};
     public wheres: Array<Where> = [];
 
     // SQL compiler converts a query builder object into a SQL string
@@ -157,6 +159,15 @@ export default class Builder
         const Model = models.getModel(this.model);
 
         return rows.map(row => new Model(row));
+    }
+
+    public async update(updates): Promise<any>
+    {
+        this.isUpdate = true;
+        this.updates = Object.assign({}, this.updates, updates);
+
+        const sql = this.compiler.compileUpdate(this);
+        return await DB.run(sql);
     }
 
     public where(column: string, operator: string, value: number|string): Builder

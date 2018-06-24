@@ -94,4 +94,39 @@ describe('Compiler', () =>
 
         expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` IN (1, 2, 3)");
     });
+
+    test('compileUpdate', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        query.updates = {active: 0};
+        query.isUpdate = true;
+
+        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0");
+    });
+
+    test('compileUpdate - where', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        query.updates = {active: 0};
+        query.isUpdate = true;
+        query.where('firstName', '=', 'test');
+
+        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0 WHERE `firstName` = 'test'");
+    });
+
+    test('compileUpdate - whereIn', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        query.updates = {active: 0};
+        query.isUpdate = true;
+        query.whereIn('id', [1, 2, 3]);
+
+        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0 WHERE `id` IN (1, 2, 3)");
+    });
 });
