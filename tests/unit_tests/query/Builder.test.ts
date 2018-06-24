@@ -12,6 +12,13 @@ describe('Builder', () =>
         expect(query.isDistinct).toEqual(true);
     });
 
+    test('join', () =>
+    {
+        const query = new Builder().from('users');
+        query.join('comments', 'users.id', '=', 'comments.userId');
+        expect(query.joins.length).toEqual(1);
+    });
+
     test('limit', () =>
     {
         const query = new Builder().from('users');

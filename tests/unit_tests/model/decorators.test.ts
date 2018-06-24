@@ -122,10 +122,18 @@ describe('Model decorators', () =>
         expect(client.id).toEqual(1);
     });
 
-    test('relation - belongsToMany', () =>
+    test('relation - belongsToMany', async () =>
     {
         const user = new User({id: 1});
         expect(user.roles().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'roles')).toEqual(true);
+
+        require('mysql').setMockResults([
+            {id: 1, name: 'Role 1'}
+        ]);
+
+        const roles = await user.$roles;
+        expect(roles.length).toEqual(1);
+        expect(roles[0].constructor.name).toEqual('Role');
     })
 });
