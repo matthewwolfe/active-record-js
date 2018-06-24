@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
-import { ModelEvent } from 'model/constants';
-import { HasAttributes, HasEvents, HasRelationships, HasTimestamps, HidesAttributes } from 'model/related';
+import { HasAttributes, HasRelationships, HasTimestamps, HidesAttributes } from 'model/related';
 import relations from 'model/stores/relations';
 import { Builder } from 'query';
 import { applyMixins } from 'utils/mixins';
@@ -10,7 +9,7 @@ interface ProxyType {
     [name: string]: any;
 }
 
-class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps, HidesAttributes, ProxyType
+class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttributes, ProxyType
 {
     // Allow any property since relations are added on initialization
     [property: string]: any;
@@ -28,10 +27,8 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     hidden: Array<string> = [];
     timestamps: boolean = true;
 
-    addListener: (event: any, fn: any) => void;
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
     belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
-    fireEvent: (event: ModelEvent) => void;
     fillAttributes: (attributes: object) => void;
     getAccessorProperty: (key: string|number) => any;
     getAttribute: (key: string|number) => any;
@@ -129,6 +126,6 @@ class Model implements HasAttributes, HasEvents, HasRelationships, HasTimestamps
     }
 }
 
-applyMixins(Model, [HasAttributes, HasEvents, HasRelationships, HasTimestamps, HidesAttributes]);
+applyMixins(Model, [HasAttributes, HasRelationships, HasTimestamps, HidesAttributes]);
 
 export default Model;
