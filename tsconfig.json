@@ -1,21 +1,23 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "target": "es6",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": false,
+        "baseUrl": "./src/",
+        "declaration": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
-        "removeComments": false,
+        "module": "commonjs",
         "noImplicitAny": false,
-        "outFile": "./dist/active-record.js",
+        "outDir": "./dist",
+        "removeComments": false,
         "rootDir": "./src/",
-        "baseUrl": "./src/"
+        "sourceMap": false,
+        "target": "es6"
     },
     "exclude": [
         "node_modules",
-        ".npm"
+        ".npm",
+        "dist",
+        "tests",
     ]
 }

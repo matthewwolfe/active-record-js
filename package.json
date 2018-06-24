@@ -1,11 +1,12 @@
 {
-  "name": "active-record",
-  "version": "0.1.0",
+  "name": "active-record-js",
+  "version": "2.0.0",
   "description": "",
-  "main": "src/index.ts",
-  "types": "types.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "prepublish": "npm run build",
     "test": "NODE_PATH=./src jest",
     "watch": "tsc --watch"
   },
@@ -21,7 +22,7 @@
       "node"
     ]
   },
-  "author": "",
+  "author": "Matthew Wolfe",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "23.1.1",
