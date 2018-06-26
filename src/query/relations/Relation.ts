@@ -1,5 +1,5 @@
-import models from 'model/stores/models';
-import Builder from 'query/Builder';
+import models from '../../model/stores/models';
+import Builder from '../Builder';
 
 
 export default class Relation
