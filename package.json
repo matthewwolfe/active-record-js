@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "NODE_PATH=./src jest",
     "watch": "tsc --watch"
   },
@@ -30,13 +30,13 @@
     "jest": "23.1.0",
     "sqlstring": "2.3.1",
     "ts-jest": "22.4.6",
-    "ts-node": "6.1.1",
-    "typescript": "2.9.1"
+    "ts-node": "7.0.0",
+    "typescript": "2.9.2"
   },
   "dependencies": {
     "@types/md5": "2.1.32",
     "@types/mysql": "2.15.5",
-    "@types/node": "10.3.3",
+    "@types/node": "10.3.5",
     "md5": "2.2.1",
     "mysql": "2.15.0"
   }

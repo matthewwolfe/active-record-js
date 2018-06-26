@@ -1,6 +1,6 @@
 import * as mysql from 'mysql';
-import { Column, IntegerColumn } from 'migrations/columns';
-import { ColumnType } from 'migrations/constants';
+import { Column, IntegerColumn } from './columns';
+import { ColumnType } from './constants';
 
 
 export default class Blueprint

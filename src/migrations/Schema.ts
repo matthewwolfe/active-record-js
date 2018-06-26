@@ -1,6 +1,6 @@
 import * as mysql from 'mysql';
 import Blueprint from './Blueprint';
-import { DB } from 'connection';
+import { DB } from '../connection';
 
 
 export default class Schema

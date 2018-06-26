@@ -1,7 +1,7 @@
-import { DB } from 'connection';
-import models from 'model/stores/models';
-import { JoinType } from 'query/constants';
-import { Join, Order, Where } from 'query/expressions';
+import { DB } from '../connection';
+import models from '../model/stores/models';
+import { JoinType } from './constants';
+import { Join, Order, Where } from './expressions';
 import Compiler from './Compiler';
 
 

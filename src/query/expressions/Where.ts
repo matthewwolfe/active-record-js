@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import { OPERATORS } from 'query/constants';
+import { OPERATORS } from '../constants';
 
 
 export default class Where

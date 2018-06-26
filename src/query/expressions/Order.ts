@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import { SORT_DIRECTIONS } from 'query/constants';
+import { SORT_DIRECTIONS } from '../constants';
 
 
 export default class Order

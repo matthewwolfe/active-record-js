@@ -12,7 +12,7 @@ class Emitter
 
     public static emit(event: any)
     {
-        this.emitter.emit(event.toString());
+        this.emitter.emit(event.type, event.getMessage());
     }
 }
 

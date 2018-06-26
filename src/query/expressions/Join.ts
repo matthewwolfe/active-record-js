@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import { JoinType } from 'query/constants';
+import { JoinType } from '../constants';
 
 export default class Join
 {

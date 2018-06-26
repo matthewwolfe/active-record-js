@@ -1,5 +1,5 @@
-import { BelongsTo, BelongsToMany, HasMany, HasOne } from 'query/relations';
-import Builder from 'query/Builder';
+import { BelongsTo, BelongsToMany, HasMany, HasOne } from '../../query/relations';
+import Builder from '../../query/Builder';
 
 
 export default class HasRelationships

@@ -1,8 +1,7 @@
-import { EventEmitter } from 'events';
-import { HasAttributes, HasRelationships, HasTimestamps, HidesAttributes } from 'model/related';
-import relations from 'model/stores/relations';
-import { Builder } from 'query';
-import { applyMixins } from 'utils/mixins';
+import { HasAttributes, HasRelationships, HasTimestamps, HidesAttributes } from './related';
+import relations from './stores/relations';
+import { Builder } from '../query';
+import { applyMixins } from '../utils/mixins';
 
 
 interface ProxyType {
@@ -23,7 +22,6 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     appends: Array<string> = [];
     casts: object = {};
     changedAttributes: Array<string> = [];
-    emitter: EventEmitter;
     hidden: Array<string> = [];
     timestamps: boolean = true;
 
