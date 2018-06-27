@@ -83,9 +83,13 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         );
     }
 
-    public delete()
+    public async delete()
     {
+        if (this.exists) {
+            return this.newModelQuery().where(this.primaryKey, '=', this.attributes[this.primaryKey]);
+        }
 
+        return false;
     }
 
     public static async findById(id: number): Promise<Model>

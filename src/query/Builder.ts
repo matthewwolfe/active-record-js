@@ -42,8 +42,12 @@ export default class Builder
         this.compiler = new Compiler();
     }
 
-    public async delete()
+    public async delete(attributes = {})
     {
+        for (const key in attributes) {
+            this.where(key, '=', attributes[key]);
+        }
+
         const sql = this.compiler.compileDelete(this);
         await DB.run(sql);
     }
