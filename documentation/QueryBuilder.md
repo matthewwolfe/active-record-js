@@ -37,4 +37,63 @@ Inserting a raw expression into the select statement of a query is easy using th
 Product.selectRaw('price * ? as tax', [0.05]);
 ```
 
-## Joins
+#### Distinct
+
+```typescript
+const query = await User.select(['age']).distinct().get();
+```
+
+#### First
+
+```typescript
+const user = await User.select(['id']).first();
+```
+
+#### Get
+
+```typescript
+const users = await User.select(['*']).get();
+```
+
+#### Joins
+
+```typescript
+const query = User.select(['id']);
+query.join('comments', 'users.id', '=', 'comments.userId');
+```
+
+#### Limit
+
+```typescript
+const users = await User.select(['id']).limit(5).get();
+```
+
+#### Offset
+
+```typescript
+const users = await User.select(['id']).offset(5).get();
+```
+
+#### Order By
+
+```typescript
+const users = await User.select(['id']).orderBy('createdAt', 'desc').get();
+```
+
+#### Where
+
+```typescript
+const users = await User.where('active', '=', true).get();
+```
+
+#### Where In
+
+```typescript
+const users = await User.whereIn('id', [1, 2, 3, 4, 5]).get();
+```
+
+#### Update
+
+```typescript
+await User.where('lockouts', '>', 5).update({banned: true});
+```
