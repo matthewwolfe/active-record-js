@@ -3,6 +3,7 @@
 
 #### Documentation
 
+- [Events](Events.md)
 - [Migrations](Migrations.md)
 - [Model](Model.md)
 - [Query Builder](QueryBuilder.md)
@@ -16,7 +17,7 @@ different databases. The active database can be switched by specifying a databas
 parameter.
 
 ```typescript
-import { DB } from 'active-record';
+import { DB } from 'active-record-js';
 
 DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION NAME');
 ```
@@ -25,7 +26,7 @@ DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION
 ## Switching databases
 
 ```typescript
-import { DB } from 'active-record';
+import { DB } from 'active-record-js';
 
 DB.create('127.0.0.1', 'root', 'password', 'db1', 'db1');
 

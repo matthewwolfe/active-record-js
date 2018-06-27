@@ -3,7 +3,7 @@
 ## Import
 
 ```typescript
-import { Model, model } from 'active-record';
+import { Model, model } from 'active-record-js';
 ```
 
 ## Descriptions

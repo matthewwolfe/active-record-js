@@ -83,6 +83,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         );
     }
 
+    public delete()
+    {
+
+    }
+
     public static async findById(id: number): Promise<Model>
     {
         return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
@@ -100,7 +105,6 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         this.exists = true;
 
         new ModelCreated(this).fire();
-
         return true;
     }
 
