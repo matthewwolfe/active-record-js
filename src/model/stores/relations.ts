@@ -2,7 +2,7 @@ class Relations
 {
     private relations: object = {};
 
-    public isRelation(modelName, methodName)
+    public isRelation(modelName: string, methodName: string): boolean
     {
         if (!this.relations.hasOwnProperty(modelName) ||
             this.relations[modelName].indexOf(methodName) === -1)
@@ -13,7 +13,7 @@ class Relations
         return true;
     }
 
-    public getRelations(modelName)
+    public getRelations(modelName: string): Array<string>
     {
         if (!this.relations.hasOwnProperty(modelName)) {
             return [];
@@ -22,7 +22,7 @@ class Relations
         return this.relations[modelName];
     }
 
-    public setRelation(modelName, methodName)
+    public setRelation(modelName: string, methodName: string): void
     {
         if (!this.relations.hasOwnProperty(modelName)) {
             this.relations[modelName] = [];

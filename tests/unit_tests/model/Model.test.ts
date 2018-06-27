@@ -123,4 +123,47 @@ describe('Model', () =>
 
         expect(user.id).toEqual(1);
     });
+
+    test('get dirty attributes', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const user = new User();
+        user.id = 1;
+        user.firstName = 'test';
+        user.lastName = 'user';
+
+        expect(user.changedAttributes.length).toEqual(3);
+        expect(user.getDirtyAttributes()).toEqual({
+            id: 1,
+            firstName: 'test',
+            lastName: 'user'
+        });
+    });
+
+    test('update', async () =>
+    {
+        require('mysql').setMockResults([
+            {id: 1, firstName: 'test', lastName: 'user'}
+        ]);
+
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const user = new User();
+
+        user.id = 1;
+        user.firstName = 'test';
+        user.lastName = 'user';
+        const success = await user.save();
+
+        expect(success).toEqual(true);
+    });
 });

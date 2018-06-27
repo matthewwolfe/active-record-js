@@ -17,7 +17,7 @@ export default class Order
         this.direction = direction;
     }
 
-    public toString()
+    public toString(): string
     {
         return `${mysql.escapeId(this.column)} ${mysql.escapeId(this.direction.toUpperCase())}`;
     }

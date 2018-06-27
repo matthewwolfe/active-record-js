@@ -21,7 +21,7 @@ export default class Join
         }
     }
 
-    public toString()
+    public toString(): string
     {
         return `${this.type} ${mysql.escapeId(this.table)} ON ${mysql.escapeId(this.localKey)} ${this.operator} ${mysql.escapeId(this.foreignKey)}`;
     }

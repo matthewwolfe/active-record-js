@@ -7,7 +7,7 @@ class Models
         this.models[Model.name] = Model;
     }
 
-    public getModel(name: string)
+    public getModel(name: string): any
     {
         return this.models[name];
     }

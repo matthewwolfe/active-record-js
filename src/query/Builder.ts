@@ -40,16 +40,16 @@ export default class Builder
         this.compiler = new Compiler();
     }
 
-    public distinct()
+    public distinct(): Builder
     {
         this.isDistinct = true;
         return this;
     }
 
-    public first()
+    public async first(): Promise<any>
     {
         this.setIsFirst(true);
-        return this.get();
+        return await this.get();
     }
 
     public from(table: string): Builder
@@ -85,6 +85,7 @@ export default class Builder
     {
         const sql = this.compiler.compileInsert(this, attributes);
         const { insertId } = await DB.run(sql);
+
         return insertId;
     }
 
@@ -158,7 +159,7 @@ export default class Builder
 
         const Model = models.getModel(this.model);
 
-        return rows.map(row => new Model(row));
+        return rows.map(row => new Model(row, true));
     }
 
     public async update(updates): Promise<any>

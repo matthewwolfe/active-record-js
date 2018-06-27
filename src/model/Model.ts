@@ -1,6 +1,7 @@
+import { ModelCreated, ModelCreating, ModelSaved, ModelSaving, ModelUpdating, ModelUpdated } from '../emitter/events';
+import { Builder } from '../query';
 import { HasAttributes, HasRelationships, HasTimestamps, HidesAttributes } from './related';
 import relations from './stores/relations';
-import { Builder } from '../query';
 import { applyMixins } from '../utils/mixins';
 
 
@@ -27,10 +28,12 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
 
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
     belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
+    clearChangedAttributes: () => void;
     fillAttributes: (attributes: object) => void;
     getAccessorProperty: (key: string|number) => any;
     getAttribute: (key: string|number) => any;
     getAttributes: () => any;
+    getDirtyAttributes: () => object;
     getHidden: () => Array<string>;
     hasMany: (related: string, foreignKey: string, localKey?: string) => any;
     hasOne: (related: string, foreignKey: string, localKey?: string) => any;
@@ -50,10 +53,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     protected incrementing: boolean = true;
     protected primaryKey: string = 'id';
 
-    constructor(attributes: object = {})
+    constructor(attributes: object = {}, exists = false)
     {
         this.fillAttributes(attributes);
         this.applyRelations();
+        this.exists = exists;
 
         return new Proxy(this, {
             get: (object, property: number|string) => {
@@ -93,29 +97,45 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     {
         const id = await query.insert(this.attributes);
         this.id = id;
+        this.exists = true;
+
+        new ModelCreated(this).fire();
 
         return true;
     }
 
     private async performUpdate(query: Builder): Promise<boolean>
     {
-        return true;
+        const success = await query.update(this.getDirtyAttributes());
+        new ModelUpdated(this).fire();
+
+        return success;
     }
 
     public async save(): Promise<boolean>
     {
+        new ModelSaving(this).fire();
+
+        let success = false;
         const query = this.newModelQuery();
 
         if (this.exists && this.isDirty())
         {
-            return await this.performUpdate(query);
+            new ModelUpdating(this).fire();
+            success = await this.performUpdate(query);
 
         }
         else if (this.isDirty()) {
-            return await this.performInsert(query);
+            new ModelCreating(this).fire();
+            success = await this.performInsert(query);
         }
 
-        return true;
+        if (success) {
+            this.clearChangedAttributes();
+            new ModelSaved(this).fire();
+        }
+
+        return success;
     }
 
     public static select(select: Array<string>): Builder

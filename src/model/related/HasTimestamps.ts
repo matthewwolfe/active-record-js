@@ -5,15 +5,13 @@ export default class HasTimestamps
     public CREATED_AT: string;
     public UPDATED_AT: string;
 
-    public setCreatedAt(timestamp)
+    public setCreatedAt(timestamp): void
     {
         this[this.CREATED_AT] = timestamp;
-        return this;
     }
 
-    public setUpdatedAt(timestamp)
+    public setUpdatedAt(timestamp): void
     {
         this[this.UPDATED_AT] = timestamp;
-        return this;
     }
 }
