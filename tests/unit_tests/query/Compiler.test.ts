@@ -4,12 +4,29 @@ import Compiler from 'query/Compiler';
 
 describe('Compiler', () =>
 {
+    test('compileDelete', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        expect(compiler.compileDelete(query)).toEqual("DELETE FROM `users`");
+    });
+
+    test('compileDelete - wheres', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('user');
+        query.where('id', '=', 1);
+
+        expect(compiler.compileDelete(query)).toEqual("DELETE FROM `user` WHERE `id` = 1");
+    });
+
     test('compileSelect - default select', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
 
-        expect(compiler.compileSelect(query)).toEqual('SELECT `users`.`*` FROM `users`');
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users`");
     });
 
     test('compileSelect - distinct', () =>

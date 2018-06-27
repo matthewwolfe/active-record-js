@@ -5,6 +5,20 @@ import * as mysql from 'mysql';
  */
 export default class Compiler
 {
+    public compileDelete(query): string
+    {
+        const expressions = [];
+
+        expressions.push('DELETE FROM');
+        expressions.push(mysql.escapeId(query.fromTable));
+
+        if (query.wheres.length > 0) {
+            expressions.push('WHERE', query.wheres.join(' AND '));
+        }
+
+        return expressions.join(' ').trim();
+    }
+
     public compileInsert(query, attributes): string
     {
         const expressions = [];

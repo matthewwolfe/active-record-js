@@ -13,6 +13,8 @@ export default class Builder
 
     // Select distinct
     public isDistinct: boolean = false;
+
+    public isDelete: boolean = false;
     public isUpdate: boolean = false;
 
     // Limits the query to 1 and returns the first result if true
@@ -38,6 +40,12 @@ export default class Builder
     constructor()
     {
         this.compiler = new Compiler();
+    }
+
+    public async delete()
+    {
+        const sql = this.compiler.compileDelete(this);
+        await DB.run(sql);
     }
 
     public distinct(): Builder
