@@ -7,6 +7,6 @@ export default class ModelSaving extends Event
 
     public getMessage()
     {
-
+        return this.type;
     }
 }

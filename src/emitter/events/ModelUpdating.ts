@@ -7,6 +7,6 @@ export default class ModelUpdating extends Event
 
     public getMessage()
     {
-
+        return this.type;
     }
 }

@@ -7,6 +7,6 @@ export default class ModelCreating extends Event
 
     public getMessage()
     {
-
+        return this.type;
     }
 }

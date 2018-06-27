@@ -7,6 +7,6 @@ export default class ModelDeleting extends Event
 
     public getMessage()
     {
-
+        return this.type;
     }
 }

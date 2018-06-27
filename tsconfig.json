@@ -8,7 +8,7 @@
         "experimentalDecorators": true,
         "module": "commonjs",
         "noImplicitAny": false,
-        "outDir": "./dist",
+        "outDir": "./dist/",
         "removeComments": false,
         "rootDir": "./src/",
         "sourceMap": false,
