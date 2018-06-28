@@ -1,5 +1,7 @@
 # active-record-js
 
+[![Build Status](https://travis-ci.com/matthewwolfe/active-record-js.svg?branch=master)](https://travis-ci.com/matthewwolfe/active-record-js)
+
 A Node.JS Active Record implementation, heavily influenced by Laravel's eloquent.
 
 
