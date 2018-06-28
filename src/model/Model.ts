@@ -1,4 +1,13 @@
-import { ModelCreated, ModelCreating, ModelSaved, ModelSaving, ModelUpdating, ModelUpdated } from '../emitter/events';
+import {
+    ModelCreated,
+    ModelCreating,
+    ModelDeleted,
+    ModelDeleting,
+    ModelSaved,
+    ModelSaving,
+    ModelUpdating,
+    ModelUpdated
+} from '../emitter/events';
 import { Builder } from '../query';
 import { HasAttributes, HasRelationships, HasTimestamps, HidesAttributes } from './related';
 import relations from './stores/relations';
@@ -85,8 +94,15 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
 
     public async delete()
     {
+        new ModelDeleting(this).fire();
+
         if (this.exists) {
-            return this.newModelQuery().where(this.primaryKey, '=', this.attributes[this.primaryKey]);
+            await this.newModelQuery()
+                .where(this.primaryKey, '=', this.attributes[this.primaryKey])
+                .delete();
+
+            new ModelDeleted(this).fire();
+            return true;
         }
 
         return false;

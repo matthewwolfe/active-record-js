@@ -7,11 +7,13 @@ A Node.JS Active Record implementation, heavily influenced by Laravel's eloquent
 
 Check out the documentation for examples on how to get started
 
-- [Getting Started](documentation/GettingStarted.md)
+- [Getting Started](https://github.com/matthewwolfe/active-record-js/blob/master/documentation/GettingStarted.md)
 
 ## Installation
 
 This package is available on [npm](https://www.npmjs.com/).
+
+```npm install --save active-record-js```
 
 ## License
 
