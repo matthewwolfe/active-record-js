@@ -38,12 +38,32 @@ describe('Compiler', () =>
         expect(compiler.compileSelect(query)).toEqual("SELECT DISTINCT `users`.`*` FROM `users`");
     });
 
+    test('compileSelect - groupBy', () =>
+    {
+        const sql = "SELECT `users`.`*` FROM `users` GROUP BY roleId, accountId";
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+        query.groupBy(['roleId', 'accountId']);
+
+        expect(compiler.compileSelect(query)).toEqual(sql);
+    });
+
     test('compileSelect - join', () =>
     {
         const sql = "SELECT `users`.`*` FROM `users` JOIN `comments` ON `users`.`id` = `comments`.`userId`";
         const compiler = new Compiler();
         const query = new Builder().from('users');
         query.join('comments', 'users.id', '=', 'comments.userId');
+
+        expect(compiler.compileSelect(query)).toEqual(sql);
+    });
+
+    test('compileSelect - leftJoin', () =>
+    {
+        const sql = "SELECT `users`.`*` FROM `users` LEFT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+        query.leftJoin('comments', 'users.id', '=', 'comments.userId');
 
         expect(compiler.compileSelect(query)).toEqual(sql);
     });
@@ -78,6 +98,16 @@ describe('Compiler', () =>
         expect(compiler.compileSelect(query)).toEqual(
             "SELECT `users`.`*` FROM `users` ORDER BY `id` `DESC`, `firstName` `ASC`"
         );
+    });
+
+    test('compileSelect - rightJoin', () =>
+    {
+        const sql = "SELECT `users`.`*` FROM `users` RIGHT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+        query.rightJoin('comments', 'users.id', '=', 'comments.userId');
+
+        expect(compiler.compileSelect(query)).toEqual(sql);
     });
 
     test('compileSelect - select', () =>

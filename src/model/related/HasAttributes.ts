@@ -1,9 +1,11 @@
+import { casts } from '../../utils/casts';
+
+
 export default class HasAttributes
 {
     public appends: Array<string> = [];
-    public casts: object = {};
-
     public attributes: object = {};
+    public static casts: object = {};
     public changedAttributes: Array<string> = [];
 
     public clearChangedAttributes(): void
@@ -11,10 +13,21 @@ export default class HasAttributes
         this.changedAttributes = [];
     }
 
-    public fillAttributes(attributes: object): void
+    public fillAttributes(attributes: object, exists: boolean): void
     {
         for (const key in attributes) {
-            this.setAttribute(key, attributes[key]);
+            if (exists) {
+                if (this.constructor['casts'].hasOwnProperty(key)) {
+                    this.attributes[key] = casts[this.constructor['casts'][key]](attributes[key]);
+                }
+                else {
+                    this.attributes[key] = attributes[key];
+                }
+            }
+            else {
+                this.setAttribute(key, attributes[key]);
+            }
+
         }
     }
 

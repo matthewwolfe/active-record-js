@@ -28,9 +28,10 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     CREATED_AT: string = 'createdAt';
     UPDATED_AT: string = 'updatedAt';
 
+    public static casts: object = {};
+
     attributes: object = {};
     appends: Array<string> = [];
-    casts: object = {};
     changedAttributes: Array<string> = [];
     hidden: Array<string> = [];
     timestamps: boolean = true;
@@ -38,7 +39,7 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
     belongsToMany: (related: string, pivot: string, foreignPivotKey?: string, localPivotKey?: string) => any;
     clearChangedAttributes: () => void;
-    fillAttributes: (attributes: object) => void;
+    fillAttributes: (attributes: object, exits: boolean) => void;
     getAccessorProperty: (key: string|number) => any;
     getAttribute: (key: string|number) => any;
     getAttributes: () => any;
@@ -55,7 +56,6 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     setUpdatedAt: (timestamp: string) => any;
 
     // End mixin type definitions
-
     public static table: string = '';
 
     protected exists: boolean = false;
@@ -64,7 +64,7 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
 
     constructor(attributes: object = {}, exists = false)
     {
-        this.fillAttributes(attributes);
+        this.fillAttributes(attributes, exists);
         this.applyRelations();
         this.exists = exists;
 

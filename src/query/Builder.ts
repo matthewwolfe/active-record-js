@@ -1,3 +1,4 @@
+import { Collection } from '../collections';
 import { DB } from '../connection';
 import models from '../model/stores/models';
 import { JoinType } from './constants';
@@ -81,7 +82,7 @@ export default class Builder
         let rows = this.transformRows(await DB.run(sql));
 
         if (this.isFirst) {
-            return rows[0];
+            return rows.shift();
         }
 
         return rows;
@@ -104,6 +105,12 @@ export default class Builder
     public join(table: string, localKey: string, operator: string, foreignKey: string): Builder
     {
         this.joins.push(new Join(table, localKey, operator, foreignKey, JoinType.Inner));
+        return this;
+    }
+
+    public leftJoin(table: string, localKey: string, operator: string, foreignKey: string): Builder
+    {
+        this.joins.push(new Join(table, localKey, operator, foreignKey, JoinType.Left));
         return this;
     }
 
@@ -141,6 +148,12 @@ export default class Builder
         return this;
     }
 
+    public rightJoin(table: string, localKey: string, operator: string, foreignKey: string): Builder
+    {
+        this.joins.push(new Join(table, localKey, operator, foreignKey, JoinType.Right));
+        return this;
+    }
+
     public select(selects: Array<string>): Builder
     {
         this.selects = selects.slice();
@@ -163,15 +176,16 @@ export default class Builder
         return this.compiler.compileSelect(this);
     }
 
-    private transformRows(rows: Array<any>): Array<any>
+    private transformRows(rows: Array<any>): any
     {
+        const collection = Collection.initialize(rows);
+
         if (!this.model) {
-            return rows;
+            return collection;
         }
 
         const Model = models.getModel(this.model);
-
-        return rows.map(row => new Model(row, true));
+        return collection.map(row => new Model(row, true));
     }
 
     public async update(updates): Promise<any>

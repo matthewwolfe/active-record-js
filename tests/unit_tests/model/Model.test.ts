@@ -12,6 +12,26 @@ beforeEach(() =>
 
 describe('Model', () =>
 {
+    test('casts', async () =>
+    {
+        require('mysql').setMockResults([
+            {id: 1, firstName: 'test', lastName: 'user', active: 1}
+        ]);
+
+
+        @model
+        class User extends Model
+        {
+            public static casts = {
+                active: 'boolean'
+            };
+            public static table = 'users';
+        }
+
+        const user = await User.findById(1);
+        expect(user.active).toEqual(true);
+    });
+
     test('create a select query', () =>
     {
         @model
@@ -47,6 +67,7 @@ describe('Model', () =>
         const user = await User.findById(1);
 
         expect(user instanceof User).toEqual(true);
+        expect(user.changedAttributes.length).toEqual(0);
         expect(user.id).toEqual(1);
         expect(user.firstName).toEqual('test');
         expect(user.lastName).toEqual('user');
@@ -63,6 +84,7 @@ describe('Model', () =>
 
         const user = new User({id: 1});
         expect(user.id).toEqual(1);
+        expect(user.changedAttributes.length).toEqual(1);
     });
 
     test('get an accessor', () =>
@@ -84,6 +106,7 @@ describe('Model', () =>
         });
 
         expect(user.fullName).toEqual(`${user.firstName} ${user.lastName}`);
+        expect(user.changedAttributes.length).toEqual(2);
     });
 
     test('get an attribute with a mutator', () =>
@@ -108,6 +131,7 @@ describe('Model', () =>
 
         user.firstName = 'new name';
         expect(user.firstName).toEqual('NEW NAME');
+        expect(user.changedAttributes.length).toEqual(2);
     });
 
     test('set an attribute', () =>
@@ -122,6 +146,7 @@ describe('Model', () =>
         user.id = 1;
 
         expect(user.id).toEqual(1);
+        expect(user.changedAttributes.length).toEqual(1);
     });
 
     test('get dirty attributes', () =>
