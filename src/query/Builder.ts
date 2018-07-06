@@ -12,6 +12,8 @@ export default class Builder
     // returned row(s) into model instances
     public model: string = '';
 
+    public isCount: boolean = false;
+
     // Select distinct
     public isDistinct: boolean = false;
 
@@ -41,6 +43,12 @@ export default class Builder
     constructor()
     {
         this.compiler = new Compiler();
+    }
+
+    public async count(): Promise<any>
+    {
+        this.isCount = true;
+        return this.select(['COUNT(*)']).get();
     }
 
     public async delete(attributes = {})
@@ -79,7 +87,13 @@ export default class Builder
     public async get(): Promise<any>
     {
         const sql = this.compiler.compileSelect(this);
-        let rows = this.transformRows(await DB.run(sql));
+        let rows = await DB.run(sql);
+
+        if (this.isCount) {
+            return rows[0].count;
+        }
+
+        rows = this.transformRows(rows);
 
         if (this.isFirst) {
             return rows.shift();

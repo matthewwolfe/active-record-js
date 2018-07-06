@@ -41,12 +41,12 @@ export default class MapCollection
 
     public get(key: number|string): any
     {
-        return this.data.get(key);
+        return this.data.get(key.toString());
     }
 
     public has(key: number|string): boolean
     {
-        return this.data.has(key);
+        return this.data.has(key.toString());
     }
 
     public keys(): IterableIterator<number|string>
@@ -56,8 +56,18 @@ export default class MapCollection
 
     public set(key: number|string, value: any): MapCollection
     {
-        this.data.set(key, value);
+        this.data.set(key.toString(), value);
         return this;
+    }
+
+    public toMap(): Map<number|string, any>
+    {
+        return this.data;
+    }
+
+    public toString(): string
+    {
+        return this.data.toString();
     }
 
     public values(): IterableIterator<any>

@@ -10,7 +10,7 @@ export default class ArrayCollection
 
         return new Proxy(this, {
             get: (_, property: any) => {
-                if (Number.isInteger(parseInt(property))) {
+                if (Number.isInteger(parseInt(property.toString()))) {
                     return this.data[property];
                 }
 
@@ -114,6 +114,11 @@ export default class ArrayCollection
         return this.newInstance(this.data.map(fn, thisArg));
     }
 
+    public pluck(property: string): Array<any>
+    {
+        return this.data.map(element => element[property]);
+    }
+
     public pop(): any|undefined
     {
         return this.data.pop();
@@ -168,6 +173,11 @@ export default class ArrayCollection
     }
 
     public toArray(): Array<any>
+    {
+        return this.data;
+    }
+
+    public toJSON()
     {
         return this.data;
     }

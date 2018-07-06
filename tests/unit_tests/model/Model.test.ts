@@ -191,4 +191,28 @@ describe('Model', () =>
 
         expect(success).toEqual(true);
     });
+
+    test('where', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const query = User.where('id', '=', 1);
+        expect(query.toSql()).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` = 1");
+    });
+
+    test('whereIn', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const query = User.whereIn('id', [1, 2, 3]);
+        expect(query.toSql()).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` IN (1, 2, 3)");
+    });
 });

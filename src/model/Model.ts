@@ -83,6 +83,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         });
     }
 
+    public static async all(): Promise<Model>
+    {
+        return new this().newModelQuery().get();
+    }
+
     private applyRelations()
     {
         relations.getRelations(this.constructor.name).forEach(relation =>
@@ -165,6 +170,16 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     public static select(select: Array<string>): Builder
     {
         return new this().newModelQuery().select(select);
+    }
+
+    public static where(column: string, operator: string, value: number|string): Builder
+    {
+        return new this().newModelQuery().where(column, operator, value);
+    }
+
+    public static whereIn(column: string, value: Array<number|string>): Builder
+    {
+        return new this().newModelQuery().whereIn(column, value);
     }
 }
 
