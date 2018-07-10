@@ -29,11 +29,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     UPDATED_AT: string = 'updatedAt';
 
     public static casts: object = {};
+    public static hidden: Array<string> = [];
 
     attributes: object = {};
     appends: Array<string> = [];
     changedAttributes: Array<string> = [];
-    hidden: Array<string> = [];
     timestamps: boolean = true;
 
     belongsTo: (related: string, foreignKey: string, localKey?: string) => any;
@@ -83,7 +83,7 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         });
     }
 
-    public static async all(): Promise<Model>
+    public static async all(): Promise<any>
     {
         return new this().newModelQuery().get();
     }
@@ -170,6 +170,16 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     public static select(select: Array<string>): Builder
     {
         return new this().newModelQuery().select(select);
+    }
+
+    public toJSON()
+    {
+        return Object.keys(this.attributes)
+            .filter(key => !this.getHidden().includes(key))
+            .reduce((object, key) => {
+                object[key] = this.attributes[key];
+                return object;
+            }, {});
     }
 
     public static where(column: string, operator: string, value: number|string): Builder

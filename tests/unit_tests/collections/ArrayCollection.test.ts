@@ -1,5 +1,7 @@
 import ArrayCollection from 'collections/ArrayCollection';
 import Collection from 'collections/Collection';
+import Model from 'model/Model';
+import { model } from 'model/decorators';
 
 
 describe('ArrayCollection', () =>
@@ -69,5 +71,20 @@ describe('ArrayCollection', () =>
 
         const json = "[{\"id\":1,\"firstName\":\"test\",\"lastName\":\"user\"},{\"id\":2,\"firstName\":\"test 2\",\"lastName\":\"user 2\"}]";
         expect(JSON.stringify(collection)).toEqual(json);
+    });
+
+    test('to json with models', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        const collection = new ArrayCollection([
+            new User({id: 1, firstName: 'test', lastName: 'user'})
+        ]);
+
+        expect(JSON.stringify(collection)).toEqual("[{\"id\":1,\"firstName\":\"test\",\"lastName\":\"user\"}]");
     });
 });

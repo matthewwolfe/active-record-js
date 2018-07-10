@@ -170,6 +170,25 @@ describe('Model', () =>
         });
     });
 
+    test('toJSON with hidden attributes', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static hidden = ['password'];
+            public static table = 'users';
+        }
+
+        const user = new User({
+            id: 1,
+            firstName: 'test',
+            lastName: 'user',
+            password: 'password'
+        });
+
+        expect(JSON.stringify(user)).toEqual("{\"id\":1,\"firstName\":\"test\",\"lastName\":\"user\"}");
+    })
+
     test('update', async () =>
     {
         require('mysql').setMockResults([

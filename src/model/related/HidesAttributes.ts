@@ -1,14 +1,14 @@
 export default class HidesAttributes
 {
-    public hidden: Array<string> = [];
+    public static hidden: Array<string> = [];
 
     public getHidden(): Array<string>
     {
-        return this.hidden;
+        return this.constructor['hidden'];
     }
 
     public setHidden(keys: Array<string>): void
     {
-        this.hidden = keys.slice();
+        this.constructor['hidden'] = keys.slice();
     }
 }

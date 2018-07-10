@@ -190,7 +190,7 @@ export default class Builder
         return this.compiler.compileSelect(this);
     }
 
-    private transformRows(rows: Array<any>): any
+    private transformRows(rows: Array<any>): Array<any>|Collection
     {
         const collection = Collection.initialize(rows);
 
