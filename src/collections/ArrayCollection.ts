@@ -99,6 +99,14 @@ export default class ArrayCollection
         return this.data.join(separator);
     }
 
+    public keyBy(key: number|string): object
+    {
+        return this.newInstance(this.data.reduce((rv, x) => {
+            rv[x[key]] = x;
+            return rv;
+        }, {}))
+    }
+
     public keys(): IterableIterator<number>
     {
         return this.data.keys();

@@ -52,6 +52,19 @@ describe('ArrayCollection', () =>
         expect(usersById.get(1)[0].id).toEqual(1);
     });
 
+    test('keyBy', () =>
+    {
+        const collection = new ArrayCollection([
+            {id: 1, firstName: 'test', lastName: 'user'},
+            {id: 2, firstName: 'test 2', lastName: 'user 2'}
+        ], Collection);
+
+        const usersById = collection.keyBy('id');
+
+        expect(usersById.get(1).id).toEqual(1);
+        expect(usersById.get(2).id).toEqual(2);
+    });
+
     test('pluck', () =>
     {
         const collection = new ArrayCollection([
