@@ -62,7 +62,7 @@ describe('ArrayCollection', () =>
         expect(collection.pluck('id')).toEqual([1, 2]);
     });
 
-    test('to json', () =>
+    test('toJSON', () =>
     {
         const collection = new ArrayCollection([
             {id: 1, firstName: 'test', lastName: 'user'},
@@ -73,7 +73,7 @@ describe('ArrayCollection', () =>
         expect(JSON.stringify(collection)).toEqual(json);
     });
 
-    test('to json with models', () =>
+    test('toJSON - with models', () =>
     {
         @model
         class User extends Model

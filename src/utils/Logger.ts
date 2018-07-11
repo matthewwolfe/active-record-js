@@ -12,7 +12,7 @@ export class Logger
         return this.logs;
     }
 
-    public log(log: object)
+    public log(log: any)
     {
         this.logs.push(log);
     }

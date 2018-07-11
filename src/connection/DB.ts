@@ -1,10 +1,13 @@
 import Database from './Database';
+import { Logger } from '../utils/Logger';
 
 
 export default class DB
 {
     private static active: string;
     private static databases: Map<String, Database> = new Map();
+    private static isQueryLogEnabled: boolean = false;
+    private static logger: Logger = new Logger();
 
     public static async beginTransaction(): Promise<any>
     {
@@ -24,9 +27,9 @@ export default class DB
         this.databases.set(name, db);
     }
 
-    public static enableQueryLog()
+    public static enableQueryLog(): void
     {
-        
+        this.isQueryLogEnabled = true;
     }
 
     public static getActiveDatabase(): Database
@@ -34,8 +37,17 @@ export default class DB
         return this.databases.get(this.active);
     }
 
+    public static getQueryLog(): Array<any>
+    {
+        return this.logger.getLogs();
+    }
+
     public static async run(query): Promise<any>
     {
+        if (this.isQueryLogEnabled) {
+            this.logger.log(query);
+        }
+
         return await this.getActiveDatabase().run(query);
     }
 
@@ -44,7 +56,7 @@ export default class DB
         return await this.run('ROLLBACK');
     }
 
-    public static setActiveDatabase(name: string)
+    public static setActiveDatabase(name: string): Database
     {
         return this.databases.get(name);
     }

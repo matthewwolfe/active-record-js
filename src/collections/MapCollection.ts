@@ -70,6 +70,11 @@ export default class MapCollection
         return this.data.toString();
     }
 
+    public toJSON()
+    {
+        return this.data;
+    }
+
     public values(): IterableIterator<any>
     {
         return this.data.values();
