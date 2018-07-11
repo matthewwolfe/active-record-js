@@ -29,6 +29,15 @@ describe('Compiler', () =>
         expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users`");
     });
 
+    test('compileSelect - count', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+        query.isCount = true;
+
+        expect(compiler.compileSelect(query)).toEqual("SELECT COUNT(*) as count FROM `users`");
+    });
+
     test('compileSelect - distinct', () =>
     {
         const compiler = new Compiler();

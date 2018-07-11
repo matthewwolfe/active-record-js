@@ -51,7 +51,13 @@ export default class Compiler
             expressions.push('DISTINCT');
         }
 
-        expressions.push(query.selects.map(select => mysql.escapeId(select)).join(', '));
+        if (query.isCount) {
+            expressions.push('COUNT(*) as count');
+        }
+        else if (query.selects.length > 0) {
+            expressions.push(query.selects.map(select => mysql.escapeId(select)).join(', '));
+        }
+
         expressions.push(`FROM ${mysql.escapeId(query.fromTable)}`);
 
         if (query.joins.length > 0) {

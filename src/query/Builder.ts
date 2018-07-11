@@ -23,6 +23,7 @@ export default class Builder
     // Limits the query to 1 and returns the first result if true
     public isFirst: boolean = false;
 
+    public rawSelects: Array<string> = [];
     public selects: Array<string> = [];
 
     // The base table of the query. All other tables are appended via joins
@@ -48,7 +49,7 @@ export default class Builder
     public async count(): Promise<any>
     {
         this.isCount = true;
-        return this.select(['COUNT(*)']).get();
+        return this.get();
     }
 
     public async delete(attributes = {})
