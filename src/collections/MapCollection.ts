@@ -70,9 +70,11 @@ export default class MapCollection
         return this.data.toString();
     }
 
-    public toJSON()
+    public toJSON(): object
     {
-        return this.data;
+        return Array.from(this.data).reduce((obj, [key, value]) => (
+            Object.assign(obj, { [key]: value })
+        ), {});
     }
 
     public values(): IterableIterator<any>
