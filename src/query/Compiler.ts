@@ -19,24 +19,29 @@ export default class Compiler
         return expressions.join(' ').trim();
     }
 
-    public compileInsert(query, attributes): string
+    public compileInsert(query, rows): string
     {
         const expressions = [];
 
         expressions.push('INSERT INTO');
         expressions.push(mysql.escapeId(query.fromTable));
 
-        const columns = [];
+        const columns = Object.keys(rows[0]).map(key => mysql.escapeId(key));
         const values = [];
 
-        for (const key in attributes) {
-            columns.push(mysql.escapeId(key));
-            values.push(mysql.escape(attributes[key]));
-        }
+        rows.forEach((row) => {
+            const value = [];
+
+            for (const key in row) {
+                value.push(mysql.escape(row[key]));
+            }
+
+            values.push(value);
+        });
 
         expressions.push('(', columns.join(', '), ')');
         expressions.push('VALUES');
-        expressions.push('(', values.join(', '), ')');
+        expressions.push(values.map(value => `( ${value.join(', ')} )`).join(', '));
 
         return expressions.join(' ').trim();
     }

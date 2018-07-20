@@ -1,3 +1,4 @@
+import ConnectionOptions from './ConnectionOptions';
 import Database from './Database';
 import { Logger } from '../utils/Logger';
 
@@ -19,12 +20,12 @@ export default class DB
         return await this.run('COMMIT');
     }
 
-    public static create(host: string, user: string, password: string, database: string, name: string = ''): void
+    public static create(options: ConnectionOptions): void
     {
-        const db = new Database(host, user, password, database, name);
+        const db = new Database(options);
 
-        this.active = name;
-        this.databases.set(name, db);
+        this.active = options.name;
+        this.databases.set(options.name, db);
     }
 
     public static enableQueryLog(): void

@@ -23,6 +23,7 @@ function escapeId(string) {
 function getConnection(fn) {
     fn(undefined, {
         query,
+        destroy: jest.fn(),
         release: jest.fn()
     });
 }

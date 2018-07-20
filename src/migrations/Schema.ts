@@ -23,6 +23,12 @@ export default class Schema
         return await this.run(`DROP TABLE IF EXISTS ${mysql.escapeId(table)}`);
     }
 
+    public static async hasColumn(table: string, column: string): Promise<boolean>
+    {
+        const results = await DB.run(`SHOW COLUMNS FROM ${mysql.escapeId(table)} LIKE ${mysql.escape(column)}`);
+        return results.length !== 0;
+    }
+
     public static async hasTable(table: string): Promise<boolean>
     {
         const results = await DB.run(`SHOW TABLES LIKE ${mysql.escape(table)}`);

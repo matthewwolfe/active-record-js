@@ -7,7 +7,14 @@ describe('Database', () =>
 {
     test('getName', () =>
     {
-        const database = new Database('127.0.0.1', 'root', 'password', 'TEST_DB', 'test-database');
+        const database = new Database({
+            host: '127.0.0.1',
+            user: 'root',
+            password: 'password',
+            port: 3306,
+            database: 'TEST_DB',
+            name: 'test-database'
+        });
         expect(database.getName()).toEqual('test-database');
     });
 
@@ -18,7 +25,14 @@ describe('Database', () =>
             {id: 2, firstName: 'test', lastName: 'user2'}
         ]);
 
-        const database = new Database('127.0.0.1', 'root', 'password', 'TEST_DB', 'test-database');
+        const database = new Database({
+            host: '127.0.0.1',
+            user: 'root',
+            password: 'password',
+            port: 3306,
+            database: 'TEST_DB',
+            name: 'test-database'
+        });
         const results = await database.run("SELECT id, firstName, lastName from users");
 
         expect(results.length).toEqual(2);

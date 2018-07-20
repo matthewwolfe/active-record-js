@@ -19,7 +19,14 @@ parameter.
 ```typescript
 import { DB } from 'active-record-js';
 
-DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION NAME');
+DB.create({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'password',
+    port: 3306,
+    database: 'DATABASE NAME',
+    name: 'DATABASE CONNECTION NAME'
+});
 ```
 
 
@@ -28,10 +35,24 @@ DB.create('127.0.0.1', 'root', 'password', 'DATABASE NAME', 'DATABASE CONNECTION
 ```typescript
 import { DB } from 'active-record-js';
 
-DB.create('127.0.0.1', 'root', 'password', 'db1', 'db1');
+DB.create({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'password',
+    port: 3306,
+    database: 'db1',
+    name: 'db1'
+});
 
 // This will set the active database to be this database by default
-DB.create('127.0.0.1', 'root', 'password', 'db2', 'db2');
+DB.create({
+    host: '127.0.0.10',
+    user: 'root',
+    password: 'password',
+    port: 3306,
+    database: 'db2',
+    name: 'db2'
+});
 
 // Set the active database back to the first database
 DB.setActiveDatabase('db1');

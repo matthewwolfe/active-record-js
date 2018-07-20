@@ -6,8 +6,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "integration-test": "./integration_tests/run.sh",
+    "integration-test-run": "NODE_PATH=./src jest tests/integration_tests",
     "prepublishOnly": "npm run build",
-    "test": "NODE_PATH=./src jest",
+    "test": "npm run unit-test && npm run integration-test",
+    "unit-test": "NODE_PATH=./src jest tests/unit_tests",
     "watch": "tsc --watch"
   },
   "jest": {

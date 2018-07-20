@@ -21,6 +21,29 @@ describe('Compiler', () =>
         expect(compiler.compileDelete(query)).toEqual("DELETE FROM `user` WHERE `id` = 1");
     });
 
+    test('compileInsert', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+        const date = new Date('2018-01-01 15:00:00');
+
+        const sql = compiler.compileInsert(query, [{id: 1, createdAt: date}]);
+        expect(sql).toEqual("INSERT INTO `users` ( `id`, `createdAt` ) VALUES ( 1, '2018-01-01 15:00:00.000' )");
+    });
+
+    test('compileInsert - multiple rows', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        const sql = compiler.compileInsert(
+            query,
+            [{id: 1}, {id: 2}]
+        );
+
+        expect(sql).toEqual("INSERT INTO `users` ( `id` ) VALUES ( 1 ), ( 2 )")
+    })
+
     test('compileSelect - default select', () =>
     {
         const compiler = new Compiler();
@@ -156,10 +179,10 @@ describe('Compiler', () =>
         const compiler = new Compiler();
         const query = new Builder().from('users');
 
-        query.updates = {active: 0};
+        query.updates = {active: 0, createdAt: new Date('2018-01-01 15:00:00')};
         query.isUpdate = true;
 
-        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0");
+        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0, `createdAt` = '2018-01-01 15:00:00.000'");
     });
 
     test('compileUpdate - where', () =>

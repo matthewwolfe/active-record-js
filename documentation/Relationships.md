@@ -13,6 +13,7 @@ and a method. Relationship getters should be prefixed with a ```$```. See below:
 @model
 class User extends Model
 {
+    @relation
     public account()
     {
         return this.hasOne('Account', 'userId');

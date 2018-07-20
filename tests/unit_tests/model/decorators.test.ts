@@ -9,7 +9,14 @@ import relations from 'model/stores/relations';
 
 beforeEach(() =>
 {
-    DB.create('127.0.0.1', 'user', 'password', 'TEST_DB', 'test-database');
+    DB.create({
+        host: '127.0.0.1',
+        user: 'root',
+        password: 'password',
+        port: 3306,
+        database: 'TEST_DB',
+        name: 'test-database'
+    });
 });
 
 describe('Model decorators', () =>

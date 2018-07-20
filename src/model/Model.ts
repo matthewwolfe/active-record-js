@@ -118,6 +118,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();
     }
 
+    public static async saveMany(rows: Array<object>): Promise<any>
+    {
+        return new this().newModelQuery().insertMany(rows);
+    }
+
     private newModelQuery(): Builder
     {
         return new Builder().setModel(this.constructor.name);

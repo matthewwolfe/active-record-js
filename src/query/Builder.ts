@@ -111,10 +111,18 @@ export default class Builder
 
     public async insert(attributes: object): Promise<number>
     {
-        const sql = this.compiler.compileInsert(this, attributes);
+        const sql = this.compiler.compileInsert(this, [attributes]);
         const { insertId } = await DB.run(sql);
 
         return insertId;
+    }
+
+    public async insertMany(rows: Array<object>): Promise<any>
+    {
+        const sql = this.compiler.compileInsert(this, rows);
+        const result = await DB.run(sql);
+
+        return result;
     }
 
     public join(table: string, localKey: string, operator: string, foreignKey: string): Builder
