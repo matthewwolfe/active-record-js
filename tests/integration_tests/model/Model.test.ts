@@ -62,6 +62,28 @@ describe('Model', () =>
         expect(user.firstName).toEqual('test1');
     });
 
+    test('save', async () =>
+    {
+        const firstName = 'test test';
+        let user = await User.findById(1);
+        user.firstName = firstName;
+        await user.save();
+
+        user = await User.findById(1);
+        expect(user.firstName).toEqual(firstName);
+    });
+
+    test('saveMany', async () =>
+    {
+        await User.saveMany([
+            {id: 3, firstName: 'test3'},
+            {id: 4, firstName: 'test4'}
+        ]);
+
+        const users = await User.all();
+        expect(users.length).toEqual(4);
+    });
+
     test('select', async () =>
     {
         const users = await User.select(['id']).orderBy('id', 'asc').get();
