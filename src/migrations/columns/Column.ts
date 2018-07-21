@@ -18,15 +18,15 @@ export default class Column
         this.name = name;
         this.type = type;
 
-        if (options.hasOwnProperty('allowNull')) {
+        if (options && options.hasOwnProperty('allowNull')) {
             this.allowNull = options.allowNull;
         }
 
-        if (options.hasOwnProperty('default')) {
+        if (options && options.hasOwnProperty('default')) {
             this.default = options.default;
         }
 
-        if (options.hasOwnProperty('length')) {
+        if (options && options.hasOwnProperty('length')) {
             this.length = options.length;
         }
     }

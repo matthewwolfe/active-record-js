@@ -18,11 +18,11 @@ export default class IntegerColumn extends Column
     {
         super(name, type, options);
 
-        if (options.hasOwnProperty('autoIncrement')) {
+        if (options && options.hasOwnProperty('autoIncrement')) {
             this.autoIncrement = options.autoIncrement;
         }
 
-        if (options.hasOwnProperty('signed')) {
+        if (options && options.hasOwnProperty('signed')) {
             this.signed = options.signed;
         }
     }
