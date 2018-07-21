@@ -1,4 +1,6 @@
 import * as mysql from 'mysql';
+import ColumnOptions from './ColumnOptions';
+
 
 
 export default class Column
@@ -11,7 +13,7 @@ export default class Column
     protected type: string;
 
 
-    public constructor(name: string, type: string, options: any = {})
+    public constructor(name: string, type: string, options: ColumnOptions = null)
     {
         this.name = name;
         this.type = type;

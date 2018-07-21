@@ -124,11 +124,11 @@ describe('Compiler', () =>
         const query = new Builder().from('users');
 
         query.orderBy('id', 'desc');
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` ORDER BY `id` `DESC`");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` ORDER BY `id` DESC");
 
         query.orderBy('firstName');
         expect(compiler.compileSelect(query)).toEqual(
-            "SELECT `users`.`*` FROM `users` ORDER BY `id` `DESC`, `firstName` `ASC`"
+            "SELECT `users`.`*` FROM `users` ORDER BY `id` DESC, `firstName` ASC"
         );
     });
 

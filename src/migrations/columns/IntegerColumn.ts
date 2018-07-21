@@ -1,13 +1,20 @@
 import * as mysql from 'mysql';
 import Column from './Column';
+import ColumnOptions from './ColumnOptions';
 
+
+interface IntegerColumnOptions extends ColumnOptions
+{
+    autoIncrement?: boolean
+    signed?: boolean
+}
 
 export default class IntegerColumn extends Column
 {
     protected autoIncrement: boolean = false;
     protected signed: boolean = true;
 
-    constructor(name: string, type: string, options: any = {})
+    constructor(name: string, type: string, options: IntegerColumnOptions = null)
     {
         super(name, type, options);
 
