@@ -39,7 +39,7 @@ export default class EnumColumn extends Column
         expressions.push('NULL');
 
         if (this.default !== undefined) {
-            expressions.push('DEFAULT', this.default);
+            expressions.push('DEFAULT', mysql.escape(this.default));
         }
 
         return expressions.join(' ').trim();

@@ -9,7 +9,7 @@
 | table     | string   | Name of table to create              |
 | fn        | Function | Function containing blueprint object |
 
-```ts
+```typescript
 await Schema.createTable('users', (blueprint) =>
 {
     blueprint.integer('id', {allowNull: false, length: 15, signed: false});
@@ -23,7 +23,7 @@ await Schema.createTable('users', (blueprint) =>
 | --------- | -------- | --------------------- |
 | table     | string   | Name of table to drop |
 
-```ts
+```typescript
 await Schema.drop('users');
 ```
 
@@ -33,7 +33,7 @@ await Schema.drop('users');
 | --------- | -------- | ---------------------------------- |
 | table     | string   | Name of table to drop if it exists |
 
-```ts
+```typescript
 await Schema.dropIfExists('users');
 ```
 
@@ -44,7 +44,7 @@ await Schema.dropIfExists('users');
 | table     | string   | Name of table  |
 | column    | string   | Name of column |
 
-```ts
+```typescript
 await Schema.hasColumn('users', 'id');
 ```
 
@@ -54,7 +54,7 @@ await Schema.hasColumn('users', 'id');
 | --------- | -------- | ------------- |
 | table     | string   | Name of table |
 
-```ts
+```typescript
 await Schema.hasTable('users');
 ```
 
@@ -62,12 +62,12 @@ await Schema.hasTable('users');
 
 #### bigInteger
 
-| Parameter | Type     | Description    |
-| --------- | -------- | -------------- |
-| name      | string   | Column name    |
-| options   | object   | Column options |
+| Parameter | Type                 | Description    |
+| --------- | -------------------- | -------------- |
+| name      | string               | Column name    |
+| options   | IntegerColumnOptions | Column options |
 
-```ts
+```typescript
 blueprint.bigInteger('id', {allowNull: false, length: 15, signed: false});
 ```
 
@@ -77,43 +77,70 @@ blueprint.bigInteger('id', {allowNull: false, length: 15, signed: false});
 | --------- | -------- | ----------- |
 | name      | string   | Column name |
 
-```ts
+```typescript
 blueprint.blob('binaryData');
 ```
 
 #### char
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.char('char');
 ```
 
 #### date
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.date('startDate');
 ```
 
 #### dateTime
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.dateTime('startDateTime');
 ```
 
 #### decimal
 
-```ts
+| Parameter | Type          | Description    |
+| --------- | ------------- | -------------- |
+| name      | string        | Column name    |
+| options   | ColumnOptions | Column options |
+
+```typescript
 blueprint.decimal('decimalColumn', {allowNull: false});
 ```
 
 #### double
 
-```ts
+| Parameter | Type          | Description    |
+| --------- | ------------- | -------------- |
+| name      | string        | Column name    |
+| options   | ColumnOptions | Column options |
+
+```typescript
 blueprint.double('numberColumn', {length: 15});
 ```
 
 #### enum
 
-```ts
+| Parameter | Type              | Description    |
+| --------- | ----------------- | -------------- |
+| name      | string            | Column name    |
+| options   | EnumColumnOptions | Column options |
+
+```typescript
 blueprint.enum('status', {
     values: ['pending', 'succeeded', 'failed'],
     defaultValue: null
@@ -122,72 +149,119 @@ blueprint.enum('status', {
 
 #### float
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.float('floatColumn');
 ```
 
 #### integer
 
-```ts
+```typescript
 blueprint.integer('id', {length: 15});
 ```
 
 #### longText
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.longText('description');
 ```
 
 #### mediumInteger
 
-```ts
+| Parameter | Type                 | Description    |
+| --------- | -------------------- | -------------- |
+| name      | string               | Column name    |
+| options   | IntegerColumnOptions | Column options |
+
+```typescript
 blueprint.mediumInteger('id');
 ```
 
 #### mediumText
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.mediumText('shortDescription');
 ```
 
 #### smallInteger
 
-```ts
+| Parameter | Type                 | Description    |
+| --------- | -------------------- | -------------- |
+| name      | string               | Column name    |
+| options   | IntegerColumnOptions | Column options |
+
+```typescript
 blueprint.smallInteger('quantity');
 ```
 
 #### text
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.text('description');
 ```
 
 #### time
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.time('startTime');
 ```
 
 #### timestamp
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.timestamp('createdAt');
 ```
 
 #### tinyInteger
 
-```ts
+| Parameter | Type                 | Description    |
+| --------- | -------------------- | -------------- |
+| name      | string               | Column name    |
+| options   | IntegerColumnOptions | Column options |
+
+```typescript
 blueprint.tinyInteger('active');
 ```
 
 #### varchar
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.varchar('username');
 ```
 
 #### year
 
-```ts
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| name      | string   | Column name |
+
+```typescript
 blueprint.year('startYear');
 ```

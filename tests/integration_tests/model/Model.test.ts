@@ -54,6 +54,15 @@ describe('Model', () =>
         expect(users[1].id).toEqual(2);
     });
 
+    test('delete', async () =>
+    {
+        const user = await User.findById(1);
+        await user.delete();
+
+        const users = await User.all();
+        expect(users.length).toEqual(1);
+    });
+
     test('findById', async () =>
     {
         const id = 1;
