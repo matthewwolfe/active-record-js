@@ -19,4 +19,4 @@ This package is available on [npm](https://www.npmjs.com/).
 
 ## License
 
-This library is MIT licensed.
+[MIT](https://github.com/matthewwolfe/active-record-js/blob/master/LICENSE)
