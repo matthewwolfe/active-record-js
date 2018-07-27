@@ -89,6 +89,14 @@ describe('Builder', () =>
         expect(user.id).toEqual(2);
     });
 
+    test('orWhere', async () =>
+    {
+        const query = new Builder().from('users');
+        query.where('id', '=', 1);
+        query.orWhere('id', '=', 2);
+        expect(await query.count()).toEqual(2);
+    })
+
     test('update', async () =>
     {
         const query = new Builder().from('users').where('id', '=', 1);
