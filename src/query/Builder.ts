@@ -171,6 +171,12 @@ export default class Builder
         return this;
     }
 
+    public orWhere(column: string, operator: string, value: number|string): Builder
+    {
+        this.wheres.push(new Where(column, operator, value, Where.conditions.OR));
+        return this;
+    }
+
     public rightJoin(table: string, localKey: string, operator: string, foreignKey: string): Builder
     {
         this.joins.push(new Join(table, localKey, operator, foreignKey, JoinType.Right));
@@ -201,7 +207,7 @@ export default class Builder
 
     private transformRows(rows: Array<any>): Array<any>|Collection
     {
-        const collection = Collection.initialize(rows);
+        const collection: any = Collection.initialize(rows);
 
         if (!this.model) {
             return collection;
@@ -222,13 +228,13 @@ export default class Builder
 
     public where(column: string, operator: string, value: number|string): Builder
     {
-        this.wheres.push(new Where(column, operator, value));
+        this.wheres.push(new Where(column, operator, value, Where.conditions.AND));
         return this;
     }
 
     public whereIn(column: string, value: Array<number|string>): Builder
     {
-        this.wheres.push(new Where(column, 'in', value));
+        this.wheres.push(new Where(column, 'in', value, Where.conditions.AND));
         return this;
     }
 }

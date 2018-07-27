@@ -132,6 +132,19 @@ describe('Compiler', () =>
         );
     });
 
+    test('compileSelect - orWhere', () =>
+    {
+        const compiler = new Compiler();
+        const query = new Builder().from('users');
+
+        query.where('id', '=', 1);
+        query.orWhere('id', '=', 2);
+
+        expect(compiler.compileSelect(query)).toEqual(
+            "SELECT `users`.`*` FROM `users` WHERE `id` = 1 OR `id` = 2"
+        );
+    });
+
     test('compileSelect - rightJoin', () =>
     {
         const sql = "SELECT `users`.`*` FROM `users` RIGHT JOIN `comments` ON `users`.`id` = `comments`.`userId`";

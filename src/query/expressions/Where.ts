@@ -4,17 +4,24 @@ import { OPERATORS } from '../constants';
 
 export default class Where
 {
+    public static conditions = {
+        AND: 'AND',
+        OR: 'OR'
+    };
+
     private column: string;
+    public condition: string;
     private operator: string;
     private value: number|string|Array<number|string>;
 
-    constructor(column: string, operator: string, value: number|string|Array<number|string>)
+    constructor(column: string, operator: string, value: number|string|Array<number|string>, condition: string)
     {
         if (OPERATORS.indexOf(operator) === -1) {
             throw `where operator is not valid: ${operator}`;
         };
 
         this.column = column;
+        this.condition = condition;
         this.operator = operator;
         this.value = value;
     }

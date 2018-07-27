@@ -13,7 +13,7 @@ export default class Compiler
         expressions.push(mysql.escapeId(query.fromTable));
 
         if (query.wheres.length > 0) {
-            expressions.push('WHERE', query.wheres.join(' AND '));
+            expressions.push(this.compileWheres(query.wheres));
         }
 
         return expressions.join(' ').trim();
@@ -70,7 +70,7 @@ export default class Compiler
         }
 
         if (query.wheres.length > 0) {
-            expressions.push('WHERE', query.wheres.join(' AND '));
+            expressions.push(this.compileWheres(query.wheres));
         }
 
         if (query.groups.length > 0) {
@@ -105,9 +105,24 @@ export default class Compiler
         }
 
         if (query.wheres.length > 0) {
-            expressions.push('WHERE', query.wheres.join(' AND '));
+            expressions.push(this.compileWheres(query.wheres));
         }
 
         return expressions.join(' ').trim();
+    }
+
+    private compileWheres(wheres): string
+    {
+        const expressions = ['WHERE'];
+
+        wheres.forEach((where, index) => {
+            if (index !== 0) {
+                expressions.push(where.condition);
+            }
+
+            expressions.push(where.toString());
+        });
+
+        return expressions.join(' ');
     }
 }
