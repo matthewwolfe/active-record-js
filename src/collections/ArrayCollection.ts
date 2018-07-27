@@ -19,7 +19,7 @@ export default class ArrayCollection
         });
     }
 
-    public newInstance(data)
+    public newInstance(data): ArrayCollection
     {
         return this.Collection.initialize(data);
     }
@@ -137,7 +137,7 @@ export default class ArrayCollection
         return this.data.push(elements);
     }
 
-    public reduce(fn, initialValue)
+    public reduce(fn, initialValue): any
     {
         return this.data.reduce(fn, initialValue);
     }

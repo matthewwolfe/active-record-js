@@ -4,7 +4,7 @@ import MapCollection from './MapCollection';
 
 export default class Collection
 {
-    public static initialize(data: Array<any>|object): any
+    public static initialize(data: Array<any>|object): ArrayCollection|MapCollection|undefined
     {
         if (Array.isArray(data)) {
             return new ArrayCollection(data, Collection);
