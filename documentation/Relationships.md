@@ -5,7 +5,7 @@
 #### relation - decorator
 
 The ```relation``` decorator registers the relationship for the model class so that it can be accessible as a getter
-and a method. Relationship getters should be prefixed with a ```$```. See below: Eager Loading
+and a method. Relationship getters should be prefixed with a ```$```. See below: [Eager Loading](Relationships.md#eager-loading)
 
 #### One To One
 
