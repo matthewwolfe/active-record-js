@@ -80,6 +80,10 @@ const users = await User.select(['id']).offset(5).get();
 const users = await User.select(['id']).orderBy('createdAt', 'desc').get();
 ```
 
+#### Paginate
+
+See: [Pagination](Pagination.md)
+
 #### Where
 
 ```typescript

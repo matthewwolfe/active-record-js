@@ -8,6 +8,7 @@
 - [Migrations](Migrations.md)
 - [Model](Model.md)
 - [Query Builder](QueryBuilder.md)
+- [Pagination](Pagination.md)
 - [Relationships](Relationships.md)
 
 
