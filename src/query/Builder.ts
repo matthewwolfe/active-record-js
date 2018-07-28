@@ -1,5 +1,6 @@
 import { Collection } from '../collections';
 import { DB } from '../connection';
+import { PaginateObject, Pagination, PaginationOptions } from '../libraries/Pagination';
 import models from '../model/stores/models';
 import { JoinType } from './constants';
 import { Join, Order, Where } from './expressions';
@@ -175,6 +176,12 @@ export default class Builder
     {
         this.wheres.push(new Where(column, operator, value, Where.conditions.OR));
         return this;
+    }
+
+    public async paginate(options: PaginationOptions): Promise<PaginateObject>
+    {
+        const pagination = new Pagination({query: this, ...options});
+        return await pagination.paginate();
     }
 
     public rightJoin(table: string, localKey: string, operator: string, foreignKey: string): Builder

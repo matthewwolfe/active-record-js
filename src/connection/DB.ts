@@ -1,6 +1,6 @@
 import ConnectionOptions from './ConnectionOptions';
 import Database from './Database';
-import { Logger } from '../utils/Logger';
+import { Logger } from '../libraries/Logger';
 
 
 export default class DB

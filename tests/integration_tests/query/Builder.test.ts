@@ -95,7 +95,18 @@ describe('Builder', () =>
         query.where('id', '=', 1);
         query.orWhere('id', '=', 2);
         expect(await query.count()).toEqual(2);
-    })
+    });
+
+    test('paginate', async () =>
+    {
+        const query = new Builder().from('users');
+        const pagination = await query.paginate({limit: 1, page: 1});
+
+        expect(pagination.count).toEqual(2);
+        expect(pagination.data.length).toEqual(1);
+        expect(pagination.page).toEqual(1);
+        expect(pagination.lastPage).toEqual(2);
+    });
 
     test('update', async () =>
     {
