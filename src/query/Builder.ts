@@ -1,6 +1,6 @@
 import { Collection } from '../collections';
 import { DB } from '../connection';
-import { PaginateObject, Pagination, PaginationOptions } from '../libraries/Pagination';
+import { PaginateObject, Pagination } from '../libraries/Pagination';
 import models from '../model/stores/models';
 import { JoinType } from './constants';
 import { Join, Order, Where } from './expressions';
@@ -178,7 +178,7 @@ export default class Builder
         return this;
     }
 
-    public async paginate(options: PaginationOptions): Promise<PaginateObject>
+    public async paginate(options: any): Promise<PaginateObject>
     {
         const pagination = new Pagination({query: this, ...options});
         return await pagination.paginate();
