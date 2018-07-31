@@ -56,9 +56,8 @@ describe('Compiler', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
-        query.isCount = true;
-
-        expect(compiler.compileSelect(query)).toEqual("SELECT COUNT(*) as count FROM `users`");
+        
+        expect(compiler.compileSelect(query, true)).toEqual("SELECT COUNT(*) as count FROM `users`");
     });
 
     test('compileSelect - distinct', () =>
@@ -191,34 +190,28 @@ describe('Compiler', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
+        const updates = {active: 0, createdAt: new Date('2018-01-01 15:00:00')};
 
-        query.updates = {active: 0, createdAt: new Date('2018-01-01 15:00:00')};
-        query.isUpdate = true;
-
-        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0, `createdAt` = '2018-01-01 15:00:00.000'");
+        expect(compiler.compileUpdate(query, updates)).toEqual("UPDATE `users` SET `active` = 0, `createdAt` = '2018-01-01 15:00:00.000'");
     });
 
     test('compileUpdate - where', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
-
-        query.updates = {active: 0};
-        query.isUpdate = true;
+        const updates = {active: 0};
         query.where('firstName', '=', 'test');
 
-        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0 WHERE `firstName` = 'test'");
+        expect(compiler.compileUpdate(query, updates)).toEqual("UPDATE `users` SET `active` = 0 WHERE `firstName` = 'test'");
     });
 
     test('compileUpdate - whereIn', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
-
-        query.updates = {active: 0};
-        query.isUpdate = true;
+        const updates = {active: 0};
         query.whereIn('id', [1, 2, 3]);
 
-        expect(compiler.compileUpdate(query)).toEqual("UPDATE `users` SET `active` = 0 WHERE `id` IN (1, 2, 3)");
+        expect(compiler.compileUpdate(query, updates)).toEqual("UPDATE `users` SET `active` = 0 WHERE `id` IN (1, 2, 3)");
     });
 });

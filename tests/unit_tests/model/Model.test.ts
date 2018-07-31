@@ -24,8 +24,7 @@ describe('Model', () =>
         require('mysql').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user', active: 1}
         ]);
-
-
+        
         @model
         class User extends Model
         {

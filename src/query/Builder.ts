@@ -13,13 +13,8 @@ export default class Builder
     // returned row(s) into model instances
     public model: string = '';
 
-    public isCount: boolean = false;
-
     // Select distinct
     public isDistinct: boolean = false;
-
-    public isDelete: boolean = false;
-    public isUpdate: boolean = false;
 
     // Limits the query to 1 and returns the first result if true
     public isFirst: boolean = false;
@@ -49,8 +44,10 @@ export default class Builder
 
     public async count(): Promise<any>
     {
-        this.isCount = true;
-        return this.get();
+        const sql = this.compiler.compileSelect(this, true);
+        let rows = await DB.run(sql);
+
+        return rows[0].count;
     }
 
     public async delete(attributes = {})
@@ -90,11 +87,6 @@ export default class Builder
     {
         const sql = this.compiler.compileSelect(this);
         let rows = await DB.run(sql);
-
-        if (this.isCount) {
-            return rows[0].count;
-        }
-
         rows = this.transformRows(rows);
 
         if (this.isFirst) {
@@ -226,10 +218,7 @@ export default class Builder
 
     public async update(updates): Promise<any>
     {
-        this.isUpdate = true;
-        this.updates = Object.assign({}, this.updates, updates);
-
-        const sql = this.compiler.compileUpdate(this);
+        const sql = this.compiler.compileUpdate(this, updates);
         return await DB.run(sql);
     }
 

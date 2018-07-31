@@ -5,7 +5,7 @@ import ConnectionOptions from './ConnectionOptions';
 
 export default class Database
 {
-    private pool;
+    private pool: mysql.Pool;
 
     private database: string;
     private host: string;
@@ -16,19 +16,20 @@ export default class Database
 
     constructor(options: ConnectionOptions)
     {
+        this.database = options.database;
         this.host = options.host;
-        this.user = options.user;
+        this.name = options.name;
         this.password = options.password;
         this.port = options.port;
-        this.database = options.database;
-        this.name = options.name;
+        this.user = options.user;
+
 
         this.pool = mysql.createPool({
+            database: this.database,
             host: this.host,
-            user: this.user,
             password: this.password,
             port: this.port,
-            database: this.database
+            user: this.user
         });
     }
 

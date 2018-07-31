@@ -28,8 +28,8 @@ export class Pagination
 
     public async paginate(): Promise<PaginateObject>
     {
-        const data = await this.query.limit(this.limit).offset((this.page - 1) * this.limit).get();
         const count = await this.query.count();
+        const data = await this.query.limit(this.limit).offset((this.page - 1) * this.limit).get();
 
         return {
             count: count,

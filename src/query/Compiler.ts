@@ -46,7 +46,7 @@ export default class Compiler
         return expressions.join(' ').trim();
     }
 
-    public compileSelect(query): string
+    public compileSelect(query, count: boolean = false): string
     {
         const expressions = [];
 
@@ -56,7 +56,7 @@ export default class Compiler
             expressions.push('DISTINCT');
         }
 
-        if (query.isCount) {
+        if (count) {
             expressions.push('COUNT(*) as count');
         }
         else if (query.selects.length > 0) {
@@ -92,14 +92,14 @@ export default class Compiler
         return expressions.join(' ').trim();
     }
 
-    public compileUpdate(query): string
+    public compileUpdate(query, updates: object): string
     {
         const expressions = ['UPDATE', mysql.escapeId(query.fromTable), 'SET'];
 
-        if (query.updates) {
+        if (updates) {
             expressions.push(
-                Object.keys(query.updates).map(column =>
-                    `${mysql.escapeId(column)} = ${mysql.escape(query.updates[column])}`
+                Object.keys(updates).map(column =>
+                    `${mysql.escapeId(column)} = ${mysql.escape(updates[column])}`
                 ).join(', ')
             );
         }
