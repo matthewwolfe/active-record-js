@@ -113,6 +113,18 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         return false;
     }
 
+    public equals(instance: any): boolean
+    {
+        if (this.constructor['table'] === instance.constructor['table'] &&
+            this.primaryKey === instance.primaryKey &&
+            this[this.primaryKey] === instance[this.primaryKey])
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public static async findById(id: number): Promise<any>
     {
         return new this().newModelQuery().setIsFirst(true).where('id', '=', id).get();

@@ -24,7 +24,7 @@ describe('Model', () =>
         require('mysql').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user', active: 1}
         ]);
-        
+
         @model
         class User extends Model
         {
@@ -51,6 +51,45 @@ describe('Model', () =>
         expect(query.selects.length).toEqual(1);
         expect(query.selects[0]).toEqual('id');
         expect(query.fromTable).toEqual(User.table);
+    });
+
+    test('equals', () =>
+    {
+        @model
+        class User extends Model
+        {
+            public static table = 'users';
+        }
+
+        @model
+        class Comment extends Model
+        {
+            public static table = 'comments';
+        }
+
+        const user1 = new User({
+            id: 1,
+            firstName: 'test'
+        });
+
+        const user2 = new User({
+            id: 1,
+            firstName: 'test'
+        });
+
+        const user3 = new User({
+            id: 2,
+            firstName: 'test'
+        });
+
+        const comment1 = new Comment({
+            id: 1,
+            comment: 'test'
+        })
+
+        expect(user1.equals(user2)).toEqual(true);
+        expect(user1.equals(user3)).toEqual(false);
+        expect(user1.equals(comment1)).toEqual(false);
     });
 
     test('findById', async () =>

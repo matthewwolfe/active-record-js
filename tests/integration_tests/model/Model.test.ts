@@ -63,6 +63,14 @@ describe('Model', () =>
         expect(users.length).toEqual(1);
     });
 
+    test('equals', async () =>
+    {
+        const user1 = await User.findById(1);
+        const user2 = await User.findById(2);
+
+        expect(user1.equals(user2)).toEqual(false);
+    });
+
     test('findById', async () =>
     {
         const id = 1;
