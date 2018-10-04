@@ -1,4 +1,5 @@
 import DB from 'connection/DB';
+import Emitter from 'emitter/Emitter';
 import Schema from 'migrations/Schema';
 import { model, relation } from 'model/decorators';
 import Model from 'model/Model';
@@ -56,8 +57,16 @@ describe('Model', () =>
 
     test('delete', async () =>
     {
+        const deletingFn = jest.fn();
+        const deletedFn = jest.fn();
+        Emitter.addListener('model-deleting', deletingFn);
+        Emitter.addListener('model-deleted', deletedFn);
+
         const user = await User.findById(1);
         await user.delete();
+
+        expect(deletingFn).toHaveBeenCalledTimes(1);
+        expect(deletedFn).toHaveBeenCalledTimes(1);
 
         const users = await User.all();
         expect(users.length).toEqual(1);
