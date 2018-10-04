@@ -13,7 +13,7 @@ export default class HasAttributes
         this.changedAttributes = [];
     }
 
-    public fillAttributes(attributes: object, exists: boolean): void
+    public fillAttributes(attributes: object, exists: boolean = false): void
     {
         for (const key in attributes) {
             if (exists) {
