@@ -1,5 +1,6 @@
 import ArrayCollection from 'collections/ArrayCollection';
 import Collection from 'collections/Collection';
+import MapCollection from 'collections/MapCollection';
 import Model from 'model/Model';
 import { model } from 'model/decorators';
 
@@ -46,7 +47,7 @@ describe('ArrayCollection', () =>
             {id: 2, firstName: 'test 2', lastName: 'user 2'}
         ], Collection);
 
-        const usersById = collection.groupBy('id');
+        const usersById: any = collection.groupBy('id');
 
         expect(usersById.get(1).length).toEqual(1);
         expect(usersById.get(1)[0].id).toEqual(1);
@@ -59,7 +60,7 @@ describe('ArrayCollection', () =>
             {id: 2, firstName: 'test 2', lastName: 'user 2'}
         ], Collection);
 
-        const usersById = collection.keyBy('id');
+        const usersById: any = collection.keyBy('id');
 
         expect(usersById.get(1).id).toEqual(1);
         expect(usersById.get(2).id).toEqual(2);
@@ -96,7 +97,7 @@ describe('ArrayCollection', () =>
 
         const collection = new ArrayCollection([
             new User({id: 1, firstName: 'test', lastName: 'user'})
-        ]);
+        ], Collection);
 
         expect(JSON.stringify(collection)).toEqual("[{\"id\":1,\"firstName\":\"test\",\"lastName\":\"user\"}]");
     });

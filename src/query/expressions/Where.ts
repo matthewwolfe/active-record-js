@@ -14,11 +14,15 @@ export default class Where
     private operator: string;
     private value: number|string|Array<number|string>;
 
-    constructor(column: string, operator: string, value: number|string|Array<number|string>, condition: string)
+    constructor(column: string, operator: string, value: number|string|Array<number|string>, condition?: string)
     {
         if (OPERATORS.indexOf(operator) === -1) {
             throw `where operator is not valid: ${operator}`;
         };
+
+        if (!condition) {
+            condition = Where.conditions.AND;
+        }
 
         this.column = column;
         this.condition = condition;

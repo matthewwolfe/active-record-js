@@ -1,3 +1,6 @@
+import MapCollection from './MapCollection';
+
+
 export default class ArrayCollection
 {
     private data: Array<any> = [];
@@ -19,7 +22,7 @@ export default class ArrayCollection
         });
     }
 
-    public newInstance(data): ArrayCollection
+    public newInstance(data)
     {
         return this.Collection.initialize(data);
     }
@@ -76,7 +79,7 @@ export default class ArrayCollection
         return this.data.forEach(fn, thisArg);
     }
 
-    public groupBy(key: number|string): any
+    public groupBy(key: number|string): MapCollection
     {
         return this.newInstance(this.data.reduce((rv, x) => {
             (rv[x[key]] = rv[x[key]] || []).push(x);

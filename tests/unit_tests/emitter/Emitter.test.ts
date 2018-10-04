@@ -7,7 +7,7 @@ describe('Emitter', () =>
     test('addListener', () =>
     {
         const fn = jest.fn();
-        const event = new ModelCreated();
+        const event = new ModelCreated(null);
 
         Emitter.addListener(event.type, fn);
         Emitter.emit(event);
