@@ -3,7 +3,6 @@
 
 #### Documentation
 
-- [Collections](Collections.md)
 - [Events](Events.md)
 - [Migrations](Migrations.md)
 - [Model](Model.md)

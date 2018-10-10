@@ -1,4 +1,3 @@
-import { Collection } from '../collections';
 import { DB } from '../connection';
 import { PaginateObject, Pagination } from '../libraries/Pagination';
 import models from '../model/stores/models';
@@ -204,16 +203,14 @@ export default class Builder
         return this.compiler.compileSelect(this);
     }
 
-    private transformRows(rows: Array<any>): Array<any>|Collection
+    private transformRows(rows: Array<any>): Array<any>
     {
-        const collection: any = Collection.initialize(rows);
-
         if (!this.model) {
-            return collection;
+            return rows;
         }
 
         const Model = models.getModel(this.model);
-        return collection.map(row => new Model(row, true));
+        return rows.map(row => new Model(row, true));
     }
 
     public async update(updates): Promise<any>

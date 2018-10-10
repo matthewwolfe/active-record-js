@@ -1,4 +1,3 @@
-import { Collection } from './collections';
 import { DB } from './connection';
 import { Emitter } from './emitter';
 import { Schema } from './migrations';
@@ -7,7 +6,6 @@ import { Builder } from './query';
 
 export {
     Builder,
-    Collection,
     DB,
     Emitter,
     Model,
