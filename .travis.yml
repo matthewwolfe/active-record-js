@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-    - "8.11.3"
+    - "10.13.0"
 notifications:
   email: false
 services:
