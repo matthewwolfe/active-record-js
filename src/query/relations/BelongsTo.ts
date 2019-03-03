@@ -15,7 +15,7 @@ export default class BelongsTo extends Relation
     public buildQuery()
     {
         return super.buildQuery()
-            .where(`${this.getLocalTableName()}.${this.foreignKey}`, '=', this.getLocalKeyValue())
+            .where(`${this.getRelatedTableName()}.${this.localKey}`, '=', this.getForeignKeyValue())
             .setIsFirst(true);
     }
 }

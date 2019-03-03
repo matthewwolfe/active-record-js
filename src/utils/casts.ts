@@ -1,4 +1,4 @@
-function toBoolean(value) {
+function toBoolean(value: number|string): boolean {
     switch(value) {
         case 0:
         case '0':
@@ -15,7 +15,7 @@ function toBoolean(value) {
     }
 }
 
-function toObject(value) {
+function toObject(value: string) {
     return JSON.parse(value);
 }
 

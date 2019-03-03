@@ -15,4 +15,10 @@ export default class BelongsToMany extends Relation
         this.foreignPivotKey = foreignPivotKey;
         this.localPivotKey = localPivotKey;
     }
+
+    public buildQuery()
+    {
+        // TODO: Make this work
+        return super.buildQuery();
+    }
 }

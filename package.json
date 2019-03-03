@@ -10,7 +10,7 @@
     "integration-test-run": "NODE_PATH=./src jest tests/integration_tests",
     "prepublishOnly": "npm run build",
     "test": "npm run unit-test && npm run integration-test",
-    "unit-test": "NODE_PATH=./src jest tests/unit_tests",
+    "unit-test": "NODE_PATH=./src jest tests/unit_tests --coverage",
     "watch": "tsc --watch"
   },
   "jest": {

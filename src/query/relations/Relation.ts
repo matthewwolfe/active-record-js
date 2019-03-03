@@ -15,6 +15,11 @@ export default class Relation
         this.related = related;
     }
 
+    public getForeignKeyValue(): string
+    {
+        return this.model.getAttribute(this.foreignKey);
+    }
+
     public getLocalTableName(): string
     {
         return models.getModel(this.model.constructor.name).table;
