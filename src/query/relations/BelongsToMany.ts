@@ -1,3 +1,4 @@
+import * as mysql from 'mysql';
 import Relation from './Relation';
 
 
@@ -14,11 +15,14 @@ export default class BelongsToMany extends Relation
         this.pivot = pivot;
         this.foreignPivotKey = foreignPivotKey;
         this.localPivotKey = localPivotKey;
+
+        this.localKey = 'id';
     }
 
     public buildQuery()
     {
-        // TODO: Make this work
-        return super.buildQuery();
+        return super.buildQuery()
+            .join(this.pivot, `${this.pivot}.${this.localPivotKey}`, '=', `${this.getRelatedTableName()}.id`)
+            .where(`${this.pivot}.${this.foreignPivotKey}`, '=', this.getLocalKeyValue());
     }
 }

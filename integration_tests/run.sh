@@ -2,8 +2,6 @@ echo "initializing database"
 docker stop test-active-record-js-mysql > /dev/null
 docker rm test-active-record-js-mysql > /dev/null
 
-#  -v `pwd`/integration_tests/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-# Add the above line if a schema should be added
 docker run --name test-active-record-js-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=tests -d -p 3333:3306 mysql:5.7 > /dev/null
 
 echo "starting database"
