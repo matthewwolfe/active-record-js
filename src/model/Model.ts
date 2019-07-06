@@ -58,10 +58,11 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     // End mixin type definitions
     public static table: string = '';
 
+    public id = null;
+
     protected exists: boolean = false;
     protected incrementing: boolean = true;
     protected primaryKey: string = 'id';
-    protected id = null;
 
 
     constructor(attributes: object = {}, exists = false)
