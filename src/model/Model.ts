@@ -61,6 +61,8 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     protected exists: boolean = false;
     protected incrementing: boolean = true;
     protected primaryKey: string = 'id';
+    protected id = null;
+
 
     constructor(attributes: object = {}, exists = false)
     {
