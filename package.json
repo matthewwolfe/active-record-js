@@ -1,6 +1,6 @@
 {
   "name": "active-record-js",
-  "version": "2.0.26",
+  "version": "2.0.27",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,18 +28,18 @@
   "author": "Matthew Wolfe",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "24.0.12",
+    "@types/jest": "24.0.15",
     "@types/sqlstring": "2.2.1",
-    "jest": "24.7.1",
+    "jest": "24.8.0",
     "sqlstring": "2.3.1",
     "ts-jest": "24.0.2",
-    "ts-node": "8.1.0",
-    "typescript": "3.4.5"
+    "ts-node": "8.3.0",
+    "typescript": "3.5.2"
   },
   "dependencies": {
     "@types/md5": "2.1.33",
     "@types/mysql": "2.15.6",
-    "@types/node": "12.0.0",
+    "@types/node": "12.0.12",
     "md5": "2.2.1",
     "mysql": "2.17.1"
   }
