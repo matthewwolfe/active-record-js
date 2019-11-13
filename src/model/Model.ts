@@ -71,6 +71,10 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         this.applyRelations();
         this.exists = exists;
 
+        if (exists) {
+          this.id = attributes[this.primaryKey];
+        }
+
         return new Proxy(this, {
             get: (object, property: number|string) => {
                 if (object.isAttribute(property)) {
