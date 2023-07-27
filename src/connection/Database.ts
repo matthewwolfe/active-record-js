@@ -48,9 +48,10 @@ export default class Database
         return new Promise((resolve, reject) => {
             this.pool.getConnection((error, connection) => {
                 if (error) {
-                    console.log("ERROR", error);
-                    if(connection)
-                      connection.destroy();
+                    if(connection) {
+                        connection.destroy();
+                    }
+
                     reject(error);
                 }
 
