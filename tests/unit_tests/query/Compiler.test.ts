@@ -56,7 +56,7 @@ describe('Compiler', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
-        
+
         expect(compiler.compileSelect(query, true)).toEqual("SELECT COUNT(*) as count FROM `users`");
     });
 

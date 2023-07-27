@@ -1,4 +1,4 @@
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import { SORT_DIRECTIONS } from '../constants';
 
 

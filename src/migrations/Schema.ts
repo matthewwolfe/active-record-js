@@ -1,4 +1,4 @@
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import Blueprint from './Blueprint';
 import { DB } from '../connection';
 
