@@ -24,7 +24,7 @@ describe('BelongsToMany', () =>
         const belongsToMany = new BelongsToMany(role, 'User', 'userRoles', 'roleId', 'userId');
 
         expect(belongsToMany.buildQuery().toSql()).toEqual(
-            "SELECT `users`.`*` FROM `users` JOIN `userRoles` ON `userRoles`.`userId` = `users`.`id` WHERE `userRoles`.`roleId` = 1"
+            "SELECT `users`.* FROM `users` JOIN `userRoles` ON `userRoles`.`userId` = `users`.`id` WHERE `userRoles`.`roleId` = 1"
         );
     });
 });

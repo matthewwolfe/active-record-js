@@ -128,7 +128,6 @@ describe('Builder', () =>
     test('whereIn', async () =>
     {
         const query = new Builder().from('users').whereIn('id', [1, 2]);
-      console.log("Query", query);
         const users = await query.get();
         expect(users.length).toEqual(2);
     });

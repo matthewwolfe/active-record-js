@@ -77,7 +77,7 @@ describe('Builder', () =>
     test('toSql', () =>
     {
         const query = new Builder().from('users');
-        expect(query.toSql()).toEqual("SELECT `users`.`*` FROM `users`");
+        expect(query.toSql()).toEqual("SELECT `users`.* FROM `users`");
     });
 
     test('where', () =>

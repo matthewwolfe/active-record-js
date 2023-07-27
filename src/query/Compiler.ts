@@ -60,8 +60,7 @@ export default class Compiler
             expressions.push('COUNT(*) as count');
         }
         else if (query.selects.length > 0) {
-            // don't escape wildcard (tablename.*)
-            expressions.push(query.selects.map(select => select.match(/\.\*/) ? select : mysql.escapeId(select)).join(', '));
+            expressions.push(query.selects.map(select => select.match(/\.\*/) ? [mysql.escapeId(select.split('.')[0]), '*'].join('.') : mysql.escapeId(select)).join(', '));
         }
 
         expressions.push(`FROM ${mysql.escapeId(query.fromTable)}`);
@@ -90,7 +89,6 @@ export default class Compiler
             expressions.push('OFFSET', query.offsets);
         }
 
-        // console.log("SQL: ", expressions.join(' ').trim());
         return expressions.join(' ').trim();
     }
 

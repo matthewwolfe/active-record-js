@@ -41,14 +41,14 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
     clearChangedAttributes: () => void;
     fillAttributes: (attributes: object, exits: boolean) => void;
     getAccessorProperty: (key: string|number) => any;
-    getAttribute: (key: string|number) => any;
+    getAttribute: (key: string|number|symbol) => any;
     getAttributes: () => any;
     getDirtyAttributes: () => object;
     getHidden: () => Array<string>;
     hasMany: (related: string, foreignKey: string, localKey?: string) => any;
     hasOne: (related: string, foreignKey: string, localKey?: string) => any;
     isAccessorProperty: (key: number|string) => boolean;
-    isAttribute: (key: number|string) => boolean;
+    isAttribute: (key: number|string|symbol) => boolean;
     isDirty: () => boolean;
     setAttribute: (key: string, value: any) => void;
     setCreatedAt: (timestamp: string) => any;
@@ -76,15 +76,15 @@ class Model implements HasAttributes, HasRelationships, HasTimestamps, HidesAttr
         }
 
         return new Proxy(this, {
-            get: (object, property: number|string) => {
-                if (object.isAttribute(property)) {
-                    return object.getAttribute(property);
+            get: (object, p: number|string|symbol) => {
+                if (object.isAttribute(p)) {
+                    return object.getAttribute(p);
                 }
 
-                return object[property];
+                return object[p.toString()];
             },
-            set: (object, property: string, value) => {
-                object.setAttribute(property, value);
+            set: (object, p: string, value) => {
+                object.setAttribute(p, value);
                 return true;
             }
         });

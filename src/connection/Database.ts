@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import ConnectionOptions from './ConnectionOptions';
 
 

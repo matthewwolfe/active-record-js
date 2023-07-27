@@ -1,4 +1,4 @@
-jest.mock('mysql', () => require(`${process.cwd()}/tests/mocks/mysql`));
+jest.mock('mysql2', () => require(`${process.cwd()}/tests/mocks/mysql`));
 
 import Database from 'connection/Database';
 
@@ -20,7 +20,7 @@ describe('Database', () =>
 
     test('run', async () =>
     {
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user'},
             {id: 2, firstName: 'test', lastName: 'user2'}
         ]);
