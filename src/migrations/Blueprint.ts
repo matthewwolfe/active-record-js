@@ -1,4 +1,4 @@
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import { Column, IntegerColumn } from './columns';
 import { ColumnType } from './constants';
 

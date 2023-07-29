@@ -1,4 +1,4 @@
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 
 /**
  * Compiles a query builder instance into a string ready for execution
@@ -60,7 +60,7 @@ export default class Compiler
             expressions.push('COUNT(*) as count');
         }
         else if (query.selects.length > 0) {
-            expressions.push(query.selects.map(select => mysql.escapeId(select)).join(', '));
+            expressions.push(query.selects.map(select => select.match(/\.\*/) ? [mysql.escapeId(select.split('.')[0]), '*'].join('.') : mysql.escapeId(select)).join(', '));
         }
 
         expressions.push(`FROM ${mysql.escapeId(query.fromTable)}`);

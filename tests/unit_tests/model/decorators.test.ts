@@ -1,4 +1,4 @@
-jest.mock('mysql', () => require(`${process.cwd()}/tests/mocks/mysql`));
+jest.mock('mysql2', () => require(`${process.cwd()}/tests/mocks/mysql`));
 
 import DB from 'connection/DB';
 import { model, relation } from 'model/decorators';
@@ -87,7 +87,7 @@ describe('Model decorators', () =>
         expect(user.setting().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'setting')).toEqual(true);
 
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, userId: 1, type: 'setting-type'},
         ]);
 
@@ -103,7 +103,7 @@ describe('Model decorators', () =>
         expect(user.comments().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'comments')).toEqual(true);
 
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, userId: 1, message: 'comment 1'},
             {id: 2, userId: 1, message: 'comment 2'},
             {id: 3, userId: 1, message: 'comment 3'},
@@ -120,7 +120,7 @@ describe('Model decorators', () =>
         expect(user.client().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'client')).toEqual(true);
 
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, name: 'Client 1'}
         ]);
 
@@ -135,7 +135,7 @@ describe('Model decorators', () =>
         expect(user.roles().constructor.name).toEqual('Builder');
         expect(relations.isRelation('User', 'roles')).toEqual(true);
 
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, name: 'Role 1'}
         ]);
 

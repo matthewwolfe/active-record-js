@@ -1,4 +1,4 @@
-jest.mock('mysql', () => require(`${process.cwd()}/tests/mocks/mysql`));
+jest.mock('mysql2', () => require(`${process.cwd()}/tests/mocks/mysql`));
 
 import DB from 'connection/DB';
 import { model } from 'model/decorators';
@@ -21,7 +21,7 @@ describe('Model', () =>
 {
     test('casts', async () =>
     {
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user', active: 1}
         ]);
 
@@ -94,7 +94,7 @@ describe('Model', () =>
 
     test('findById', async () =>
     {
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user'}
         ]);
 
@@ -236,7 +236,7 @@ describe('Model', () =>
 
     test('update', async () =>
     {
-        require('mysql').setMockResults([
+        require('mysql2').setMockResults([
             {id: 1, firstName: 'test', lastName: 'user'}
         ]);
 
@@ -265,7 +265,7 @@ describe('Model', () =>
         }
 
         const query = User.where('id', '=', 1);
-        expect(query.toSql()).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` = 1");
+        expect(query.toSql()).toEqual("SELECT `users`.* FROM `users` WHERE `id` = 1");
     });
 
     test('whereIn', () =>
@@ -277,6 +277,6 @@ describe('Model', () =>
         }
 
         const query = User.whereIn('id', [1, 2, 3]);
-        expect(query.toSql()).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` IN (1, 2, 3)");
+        expect(query.toSql()).toEqual("SELECT `users`.* FROM `users` WHERE `id` IN (1, 2, 3)");
     });
 });

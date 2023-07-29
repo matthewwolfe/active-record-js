@@ -24,7 +24,7 @@ describe('BelongsTo', () =>
         const belongsTo = new BelongsTo(account, 'User', 'userId');
 
         expect(belongsTo.buildQuery().toSql()).toEqual(
-            "SELECT `users`.`*` FROM `users` WHERE `users`.`id` = 2 LIMIT 1"
+            "SELECT `users`.* FROM `users` WHERE `users`.`id` = 2 LIMIT 1"
         );
     });
 });

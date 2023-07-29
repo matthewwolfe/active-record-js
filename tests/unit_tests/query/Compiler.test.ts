@@ -49,14 +49,14 @@ describe('Compiler', () =>
         const compiler = new Compiler();
         const query = new Builder().from('users');
 
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users`");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.* FROM `users`");
     });
 
     test('compileSelect - count', () =>
     {
         const compiler = new Compiler();
         const query = new Builder().from('users');
-        
+
         expect(compiler.compileSelect(query, true)).toEqual("SELECT COUNT(*) as count FROM `users`");
     });
 
@@ -66,12 +66,12 @@ describe('Compiler', () =>
         const query = new Builder().from('users');
         query.distinct();
 
-        expect(compiler.compileSelect(query)).toEqual("SELECT DISTINCT `users`.`*` FROM `users`");
+        expect(compiler.compileSelect(query)).toEqual("SELECT DISTINCT `users`.* FROM `users`");
     });
 
     test('compileSelect - groupBy', () =>
     {
-        const sql = "SELECT `users`.`*` FROM `users` GROUP BY roleId, accountId";
+        const sql = "SELECT `users`.* FROM `users` GROUP BY roleId, accountId";
         const compiler = new Compiler();
         const query = new Builder().from('users');
         query.groupBy(['roleId', 'accountId']);
@@ -81,7 +81,7 @@ describe('Compiler', () =>
 
     test('compileSelect - join', () =>
     {
-        const sql = "SELECT `users`.`*` FROM `users` JOIN `comments` ON `users`.`id` = `comments`.`userId`";
+        const sql = "SELECT `users`.* FROM `users` JOIN `comments` ON `users`.`id` = `comments`.`userId`";
         const compiler = new Compiler();
         const query = new Builder().from('users');
         query.join('comments', 'users.id', '=', 'comments.userId');
@@ -91,7 +91,7 @@ describe('Compiler', () =>
 
     test('compileSelect - leftJoin', () =>
     {
-        const sql = "SELECT `users`.`*` FROM `users` LEFT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
+        const sql = "SELECT `users`.* FROM `users` LEFT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
         const compiler = new Compiler();
         const query = new Builder().from('users');
         query.leftJoin('comments', 'users.id', '=', 'comments.userId');
@@ -105,7 +105,7 @@ describe('Compiler', () =>
         const query = new Builder().from('users');
         query.limit(10);
 
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` LIMIT 10");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.* FROM `users` LIMIT 10");
     });
 
     test('compileSelect - limit/offset', () =>
@@ -114,7 +114,7 @@ describe('Compiler', () =>
         const query = new Builder().from('users');
         query.limit(10).offset(10);
 
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` LIMIT 10 OFFSET 10");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.* FROM `users` LIMIT 10 OFFSET 10");
     });
 
     test('compileSelect - orderBy', () =>
@@ -123,11 +123,11 @@ describe('Compiler', () =>
         const query = new Builder().from('users');
 
         query.orderBy('id', 'desc');
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` ORDER BY `id` DESC");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.* FROM `users` ORDER BY `id` DESC");
 
         query.orderBy('firstName');
         expect(compiler.compileSelect(query)).toEqual(
-            "SELECT `users`.`*` FROM `users` ORDER BY `id` DESC, `firstName` ASC"
+            "SELECT `users`.* FROM `users` ORDER BY `id` DESC, `firstName` ASC"
         );
     });
 
@@ -140,13 +140,13 @@ describe('Compiler', () =>
         query.orWhere('id', '=', 2);
 
         expect(compiler.compileSelect(query)).toEqual(
-            "SELECT `users`.`*` FROM `users` WHERE `id` = 1 OR `id` = 2"
+            "SELECT `users`.* FROM `users` WHERE `id` = 1 OR `id` = 2"
         );
     });
 
     test('compileSelect - rightJoin', () =>
     {
-        const sql = "SELECT `users`.`*` FROM `users` RIGHT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
+        const sql = "SELECT `users`.* FROM `users` RIGHT JOIN `comments` ON `users`.`id` = `comments`.`userId`";
         const compiler = new Compiler();
         const query = new Builder().from('users');
         query.rightJoin('comments', 'users.id', '=', 'comments.userId');
@@ -166,7 +166,7 @@ describe('Compiler', () =>
 
     test('compileSelect - where', () =>
     {
-        const sql = "SELECT `users`.`*` FROM `users` WHERE `firstName` = 'test' AND `lastName` = 'user'";
+        const sql = "SELECT `users`.* FROM `users` WHERE `firstName` = 'test' AND `lastName` = 'user'";
         const compiler = new Compiler();
         const query = new Builder().from('users');
 
@@ -183,7 +183,7 @@ describe('Compiler', () =>
 
         query.whereIn('id', [1, 2, 3]);
 
-        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.`*` FROM `users` WHERE `id` IN (1, 2, 3)");
+        expect(compiler.compileSelect(query)).toEqual("SELECT `users`.* FROM `users` WHERE `id` IN (1, 2, 3)");
     });
 
     test('compileUpdate', () =>

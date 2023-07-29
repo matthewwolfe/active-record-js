@@ -23,7 +23,7 @@ describe('HasMany', () =>
     {
         const hasMany = new HasMany(user, 'Comment', 'userId');
         expect(hasMany.buildQuery().toSql()).toEqual(
-            "SELECT `comments`.`*` FROM `comments` WHERE `comments`.`userId` = 1"
+            "SELECT `comments`.* FROM `comments` WHERE `comments`.`userId` = 1"
         );
     });
 });

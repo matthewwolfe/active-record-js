@@ -1,13 +1,13 @@
 {
   "name": "active-record-js",
-  "version": "2.0.30",
+  "version": "2.0.31",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "integration-test": "./integration_tests/run.sh",
-    "integration-test-run": "NODE_PATH=./src jest tests/integration_tests",
+    "integration-test-run": "NODE_PATH=./src jest --runInBand tests/integration_tests",
     "prepublishOnly": "npm run build",
     "test": "npm run unit-test && npm run integration-test",
     "unit-test": "NODE_PATH=./src jest tests/unit_tests --coverage",
@@ -30,17 +30,16 @@
   "devDependencies": {
     "@types/jest": "24.0.22",
     "@types/sqlstring": "2.2.1",
-    "jest": "24.9.0",
+    "jest": "^24.9.0",
     "sqlstring": "2.3.1",
-    "ts-jest": "24.1.0",
+    "ts-jest": "^24.1.0",
     "ts-node": "8.4.1",
-    "typescript": "3.7.2"
+    "typescript": "<4.8"
   },
   "dependencies": {
     "@types/md5": "2.1.33",
-    "@types/mysql": "2.15.8",
     "@types/node": "12.12.6",
     "md5": "2.2.1",
-    "mysql": "2.17.1"
+    "mysql2": "^3.5.2"
   }
 }

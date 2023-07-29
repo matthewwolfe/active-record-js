@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import ConnectionOptions from './ConnectionOptions';
 
 
@@ -48,7 +48,10 @@ export default class Database
         return new Promise((resolve, reject) => {
             this.pool.getConnection((error, connection) => {
                 if (error) {
-                    connection.destroy();
+                    if(connection) {
+                        connection.destroy();
+                    }
+
                     reject(error);
                 }
 

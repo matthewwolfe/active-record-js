@@ -23,7 +23,7 @@ describe('HasOne', () =>
     {
         const hasOne = new HasOne(user, 'Account', 'userId');
         expect(hasOne.buildQuery().toSql()).toEqual(
-            "SELECT `accounts`.`*` FROM `accounts` WHERE `accounts`.`userId` = 1 LIMIT 1"
+            "SELECT `accounts`.* FROM `accounts` WHERE `accounts`.`userId` = 1 LIMIT 1"
         );
     });
 });
